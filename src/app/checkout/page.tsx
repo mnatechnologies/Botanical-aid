@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { useCart } from '@/contexts/CartContext';
+import { useCart, getEffectiveUnitPrice } from '@/contexts/CartContext';
 import { ShoppingBag, ArrowLeft, Loader2, Lock } from 'lucide-react';
 
 const stripePromise = loadStripe(
@@ -162,7 +162,6 @@ export default function CheckoutPage() {
           items: items.map((item) => ({
             productId: item.product.id,
             quantity: item.quantity,
-            ...(item.variantId ? { variantId: item.variantId } : {}),
           })),
           customerEmail: shipping.email,
           shippingInfo: {
@@ -384,17 +383,14 @@ export default function CheckoutPage() {
             <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
             <div className="space-y-3 mb-4">
               {items.map((item) => {
-                const price = item.variantPrice ?? item.product.price;
-                const key = item.variantId ? `${item.product.id}:${item.variantId}` : item.product.id;
+                const unitPrice = getEffectiveUnitPrice(item.product.price, item.quantity);
                 return (
-                  <div key={key} className="flex justify-between text-sm">
+                  <div key={item.product.id} className="flex justify-between text-sm">
                     <span>
-                      {item.product.name}
-                      {item.variantName && <span className="text-muted-foreground"> ({item.variantName})</span>}
-                      {' '}x {item.quantity}
+                      {item.product.name} x {item.quantity}
                     </span>
                     <span className="font-medium">
-                      ${(price * item.quantity).toFixed(2)}
+                      ${(unitPrice * item.quantity).toFixed(2)}
                     </span>
                   </div>
                 );

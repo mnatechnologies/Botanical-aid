@@ -1712,3 +1712,4 @@ yarn-error.log*
 /.next/server/chunks/[turbopack]_runtime.js.map
 /.next/
 /.env.local
+.vercel
