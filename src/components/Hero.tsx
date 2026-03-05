@@ -127,17 +127,27 @@ export default function Hero() {
             />
           </div>
         ) : (
+          // Outer div: stable key so opacity cross-fade works
           <div
             key={i}
-            className="absolute inset-0 transition-opacity duration-700 ease-in-out"
-            style={{
-              opacity: i === current ? 1 : 0,
-              backgroundImage: `url(${slide.bg})`,
-              backgroundSize: 'cover',
-              backgroundPosition: slide.bgPosition,
-              backgroundRepeat: 'no-repeat',
-            }}
-          />
+            className="absolute inset-0 overflow-hidden transition-opacity duration-700 ease-in-out"
+            style={{ opacity: i === current ? 1 : 0 }}
+          >
+            {/* Inner div: key resets when this slide becomes active → restarts Ken Burns */}
+            <div
+              key={i === current ? `kb-${current}` : `kb-idle-${i}`}
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `url(${slide.bg})`,
+                backgroundSize: 'cover',
+                backgroundPosition: slide.bgPosition,
+                backgroundRepeat: 'no-repeat',
+                animation: i === current
+                  ? `hero-ken-burns ${SLIDE_INTERVAL + 1500}ms ease-out forwards`
+                  : 'none',
+              }}
+            />
+          </div>
         )
       )}
 

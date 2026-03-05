@@ -118,6 +118,12 @@
     to { transform: scaleX(1); }
   }
 
+  /* Hero Ken Burns — subtle zoom-in with slight pan */
+  @keyframes hero-ken-burns {
+    from { transform: scale(1.0) translate(0%, 0%); }
+    to   { transform: scale(1.08) translate(-1%, -0.5%); }
+  }
+
   /* Fade in */
   @keyframes fade-in {
     from { opacity: 0; transform: translateY(8px); }
