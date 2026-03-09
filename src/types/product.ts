@@ -14,6 +14,7 @@ export interface Product {
   description: string;
   longDescription: string;
   price: number;
+  originalPrice?: number;   // For intro/sale pricing — shows as strikethrough
   category: 'mental-health' | 'post-treatment';
   image: string;
   ingredients: string[];

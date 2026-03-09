@@ -73,6 +73,16 @@ export default function ProductDetail({ product }: { product: Product }) {
                 (${selectedVariant.unitPrice.toFixed(2)} each)
               </span>
             )}
+            {product.originalPrice && selectedVariant.id === 'single' && (
+              <>
+                <span className="text-lg text-gray-400 line-through">
+                  ${product.originalPrice.toFixed(2)}
+                </span>
+                <span className="text-xs font-bold text-white bg-[#7c3aed] px-2 py-0.5 rounded-full">
+                  INTRO OFFER
+                </span>
+              </>
+            )}
             <span className="text-sm text-muted-foreground">{product.size}</span>
           </div>
 

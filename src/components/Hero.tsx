@@ -10,17 +10,19 @@ const SLIDES = [
     type: 'image' as const,
     bg: '/assets/banner04.webp',
     bgPosition: 'left center',
-    headline: 'Healing Through',
-    subheadline: "Natures Touch.",
-    description: 'Soothe your soul and skin with our plant-based care.',
+    headline: 'Mental Health',
+    subheadline: 'Range',
+    description: 'Find the light and set your mind free with Botanical Aid.',
+    link: '/products?category=mental-health',
   },
   {
     type: 'image' as const,
     bg: '/assets/banner02.webp',
     bgPosition: 'center center',
-    headline: 'Botanical Aid.',
-    subheadline: 'Pure Care, Naturally',
-    description: 'Soothe your soul and skin with our plant-based care.',
+    headline: 'Post Treatment',
+    subheadline: 'Skincare',
+    description: 'Comfort for today, confidence tomorrow.',
+    link: '/products?category=post-treatment',
   },
   {
     type: 'video' as const,
@@ -29,6 +31,7 @@ const SLIDES = [
     headline: '',
     subheadline: '',
     description: '',
+    link: '',
   },
 ];
 
@@ -240,7 +243,7 @@ export default function Hero() {
           <div className="container mx-auto px-4 lg:px-6 pb-8 flex items-end">
             <div className="flex gap-3">
               <Link
-                href="/products"
+                href={SLIDES[current]?.link || '/products'}
                 className="px-6 py-2.5 rounded text-sm font-bold text-white transition-all hover:brightness-110 shadow"
                 style={{ backgroundColor: '#1a3a8f' }}
               >

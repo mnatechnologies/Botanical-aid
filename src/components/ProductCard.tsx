@@ -89,9 +89,21 @@ export default function ProductCard({ product }: { product: Product }) {
 
         {product.id === 'grief' && <Stars rating={5} />}
 
-        <p className="text-base font-bold text-[#22a855] mt-2">
-          ${product.price.toFixed(2)}
-        </p>
+        <div className="mt-2 flex items-center gap-2">
+          <p className="text-base font-bold text-[#22a855]">
+            ${product.price.toFixed(2)}
+          </p>
+          {product.originalPrice && (
+            <>
+              <p className="text-sm text-gray-400 line-through">
+                ${product.originalPrice.toFixed(2)}
+              </p>
+              <span className="text-[10px] font-bold text-white bg-[#7c3aed] px-1.5 py-0.5 rounded-full">
+                INTRO
+              </span>
+            </>
+          )}
+        </div>
 
         {/* Quick-add — dropdown for multi-variant, direct add for single */}
         {product.variants.length > 1 ? (

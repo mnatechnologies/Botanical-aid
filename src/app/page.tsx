@@ -11,18 +11,9 @@ import { faqSections } from '@/data/testimonials';
 
 const mentalHealthProducts = products.filter(p => p.category === 'mental-health');
 const postTreatmentProducts = products.filter(p => p.category === 'post-treatment');
-const previewFAQ = faqSections.slice(0, 1);
 
-const homeopathyFAQ = [{
-  category: 'Homeopathy',
-  items: [
-    { question: 'What is homeopathy?', answer: 'Homeopathy is a natural system of medicine that uses highly diluted substances to trigger the body\'s natural system of healing.' },
-    { question: 'How does homeopathy work?', answer: 'Homeopathy works on the principle of "like cures like" — a substance that causes symptoms in a healthy person is used in diluted form to treat similar symptoms in a sick person.' },
-    { question: 'What are homeopathic remedies made from?', answer: 'Homeopathic remedies are made from natural substances including plants, minerals, and animals. They are highly diluted and prepared through a process called potentisation.' },
-    { question: 'Is homeopathy safe?', answer: 'Homeopathic remedies are generally considered safe when used as directed. They are non-toxic and suitable for all ages, including children and pregnant women.' },
-    { question: 'What conditions can homeopathy treat?', answer: 'Homeopathy can be used to support a wide range of conditions including allergies, anxiety, digestive issues, skin conditions, and general wellbeing.' },
-  ],
-}];
+const botanicalFAQ = faqSections.filter(s => s.category === 'Botanical Aid');
+const homeopathyFAQ = faqSections.filter(s => s.category === 'Homeopathy');
 
 export default function HomePage() {
   return (
@@ -136,9 +127,11 @@ export default function HomePage() {
               <p className="text-xs text-gray-500 mb-4 leading-relaxed">
                 Botanical aid and natural products harness the power of plant-based ingredients to
                 support health and wellness. These remedies, derived from herbs, roots, and essential
-                oils, have been used for centuries to promote balance and vitality.
+                oils, have been used for centuries to promote balance and vitality. This FAQ answers
+                common questions about their benefits, uses, and how they can complement your
+                well-being naturally.
               </p>
-              <FAQAccordion sections={previewFAQ} />
+              <FAQAccordion sections={botanicalFAQ} />
             </div>
             {/* Homeopathy FAQs */}
             <div className="mt-8 md:mt-0">
@@ -150,8 +143,8 @@ export default function HomePage() {
               <p className="text-xs text-gray-500 mb-4 leading-relaxed">
                 Homeopathy is a natural, holistic system of healing that has been used for centuries.
                 It is based on the principle of &ldquo;like cures like&rdquo;, meaning that a substance
-                causing symptoms in a healthy person can help treat similar symptoms when given in
-                highly diluted doses.
+                causing symptoms in a healthy person can help treat similar symptoms in an unwell
+                person when given in highly diluted doses.
               </p>
               <FAQAccordion sections={homeopathyFAQ} />
             </div>

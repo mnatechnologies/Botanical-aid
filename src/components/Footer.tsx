@@ -14,7 +14,7 @@ export default function Footer() {
             <div className="mb-4">
               {/* White version of logo — use a text+icon fallback styled to match */}
               <Image
-                src="/assets/logo-white.png"
+                src="/assets/about-homeopathy-banner.png"
                 alt="Botanical Aid"
                 width={160}
                 height={60}

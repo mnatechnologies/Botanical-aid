@@ -1,12 +1,13 @@
 import type { Product, ProductVariant } from '@/types/product';
 
 /**
- * Mental Health bundle pricing:
- *   1× $24.95 | 2× $44.95 | 3× $64.95 | 4× $84.95
- * Savings = $4.95 per additional unit beyond the first.
+ * Mental Health bundle pricing (Intro Offer):
+ *   1× $19.95 | 2× $35.95 | 3× $51.95 | 4× $67.95
+ * Intro price: $19.95 (was $24.95)
+ * Savings = $3.95 per additional unit beyond the first.
  */
 function makeMHVariants(name: string, basePrice: number): ProductVariant[] {
-  const bundleTotals = [basePrice, 44.95, 64.95, 84.95];
+  const bundleTotals = [basePrice, 35.95, 51.95, 67.95];
   return bundleTotals.map((total, i) => {
     const qty = i + 1;
     const rrp = basePrice * qty;
@@ -55,13 +56,14 @@ export const products: Product[] = [
     name: 'Focus & Clarity',
     description: 'A unique blend of homeopathic remedies and natural oils, designed to enhance mental sharpness and concentration.',
     longDescription: 'Focus and Clarity Cream is a unique blend of homeopathic remedies and natural oils, designed to enhance mental sharpness and concentration. This product harnesses the power of nature to support cognitive function, helping you stay focused, productive, and mentally clear throughout the day.',
-    price: 24.95,
+    price: 19.95,
+    originalPrice: 24.95,
     category: 'mental-health',
     image: '/assets/focus-clarity.jpg',
     ingredients: ['Lycopodium', 'Baryta Carbonica', 'Kali Phosphoricum', 'Lavender Floral Water', 'Sage Oil', 'Lemon Floral Water', 'Orange Floral Water'],
     usage: 'Apply small amounts to temples, chest, and wrists. Allow 20 minutes for absorption. Can reapply up to four times daily.',
     size: '30g bottle',
-    variants: makeMHVariants('Focus & Clarity Cream', 24.95),
+    variants: makeMHVariants('Focus & Clarity Cream', 19.95),
     maxQuantity: 4,
   },
   {
@@ -70,13 +72,14 @@ export const products: Product[] = [
     name: 'Grief',
     description: 'A gentle, nurturing blend of natural oils and homeopathic remedies designed to provide comfort and emotional support during times of loss and sadness.',
     longDescription: 'Our Grief relief cream is a gentle, nurturing blend of natural oils and homeopathic remedies designed to provide comfort and emotional support during times of loss and sadness. This carefully formulated product combines traditional homeopathic principles with aromatherapy to create a soothing experience that supports emotional healing.',
-    price: 24.95,
+    price: 19.95,
+    originalPrice: 24.95,
     category: 'mental-health',
     image: '/assets/grief.jpg',
     ingredients: ['Ignatia Amara', 'Natrum Muriaticum', 'Neroli Oil', 'Ylang Ylang', 'Rose Oil'],
     usage: 'Apply a small amount to temples, chest, and wrists. Wait 20 minutes before reapplying. Use up to 4 times daily.',
     size: '30g bottle',
-    variants: makeMHVariants('Grief Cream', 24.95),
+    variants: makeMHVariants('Grief Cream', 19.95),
     maxQuantity: 4,
   },
   {
@@ -85,13 +88,14 @@ export const products: Product[] = [
     name: 'Mild Anxiety',
     description: 'A calming blend of homeopathic remedies and essential oils designed to help soothe everyday stress and mild anxiety naturally.',
     longDescription: 'Our Mild Anxiety relief cream harnesses the calming properties of nature to help manage everyday stress and mild anxiety. The combination of carefully selected homeopathic remedies and essential oils creates a deeply relaxing experience that promotes a sense of peace and tranquility.',
-    price: 24.95,
+    price: 19.95,
+    originalPrice: 24.95,
     category: 'mental-health',
     image: '/assets/mild-anxiety.jpg',
     ingredients: ['Aconitum Napellus', 'Argentum Nitricum', 'Gelsemium', 'Lavender Essential Oil', 'Bergamot Essential Oil', 'Frankincense Essential Oil'],
     usage: 'Apply to wrists, temples, or chest as needed. Take slow, deep breaths to enhance the calming effect. Allow 20 minutes before reapplying.',
     size: '30g bottle',
-    variants: makeMHVariants('Mild Anxiety Cream', 24.95),
+    variants: makeMHVariants('Mild Anxiety Cream', 19.95),
     maxQuantity: 4,
   },
   {
@@ -100,13 +104,14 @@ export const products: Product[] = [
     name: 'Mild Depression',
     description: 'An uplifting blend of homeopathic remedies and essential oils formulated to help brighten mood and support emotional well-being naturally.',
     longDescription: 'Our Mild Depression relief cream is crafted with mood-lifting essential oils and homeopathic remedies to help brighten your day naturally. This carefully formulated blend promotes emotional well-being and a positive outlook, supporting you through low periods with the power of nature.',
-    price: 24.95,
+    price: 19.95,
+    originalPrice: 24.95,
     category: 'mental-health',
     image: '/assets/mild-depression.jpg',
     ingredients: ['Aurum Metallicum', 'Sepia', 'Pulsatilla', 'Sweet Orange Essential Oil', 'Clary Sage Essential Oil', 'Geranium Essential Oil'],
     usage: 'Apply generously to pulse points. Use in the morning and throughout the day as desired. Allow 20 minutes before reapplying.',
     size: '30g bottle',
-    variants: makeMHVariants('Mild Depression Cream', 24.95),
+    variants: makeMHVariants('Mild Depression Cream', 19.95),
     maxQuantity: 4,
   },
 

@@ -2,6 +2,8 @@ import { Star } from 'lucide-react';
 
 interface Testimonial {
   name: string;
+  location?: string;
+  date?: string;
   rating: number;
   quote: string;
   product?: string;
@@ -32,10 +34,12 @@ export default function TestimonialCard({
       <div>
         <p className="font-semibold text-foreground text-sm">
           {testimonial.name}
+          {testimonial.location && <span className="text-muted-foreground font-normal"> {testimonial.location}</span>}
+          {testimonial.date && <span className="text-muted-foreground font-normal"> {testimonial.date}</span>}
         </p>
         {testimonial.product && (
           <p className="text-xs text-muted-foreground mt-0.5">
-            Purchased: {testimonial.product}
+            {testimonial.product}
           </p>
         )}
       </div>
