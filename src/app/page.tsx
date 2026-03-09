@@ -119,10 +119,15 @@ export default function HomePage() {
           <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-12">
             {/* Botanical Aid FAQs */}
             <div>
-              <div className="border border-[#1a3a8f] rounded px-4 py-2 mb-5 text-center">
-                <span className="text-[#1a3a8f] font-semibold text-sm tracking-wide" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
-                  Botanical<span className="text-[#22c55e]">Aid</span> 🌿
-                </span>
+              <div className="border border-[#1a3a8f] rounded px-4 py-3 mb-5 flex items-center justify-center">
+                <Image
+                  src="/circle/assets/faq-botanicalaid.png"
+                  alt="BotanicalAid"
+                  width={599}
+                  height={90}
+                  unoptimized
+                  className="h-10 w-auto object-contain"
+                />
               </div>
               <p className="text-xs text-gray-500 mb-4 leading-relaxed">
                 Botanical aid and natural products harness the power of plant-based ingredients to
@@ -135,10 +140,15 @@ export default function HomePage() {
             </div>
             {/* Homeopathy FAQs */}
             <div className="mt-8 md:mt-0">
-              <div className="border border-gray-300 rounded px-4 py-2 mb-5 text-center">
-                <span className="text-gray-600 font-semibold text-sm tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
-                  Homeopathy 🌿
-                </span>
+              <div className="border border-gray-300 rounded px-4 py-3 mb-5 flex items-center justify-center">
+                <Image
+                  src="/circle/assets/faq-homeopathy.png"
+                  alt="Homeopathy"
+                  width={598}
+                  height={90}
+                  unoptimized
+                  className="h-10 w-auto object-contain"
+                />
               </div>
               <p className="text-xs text-gray-500 mb-4 leading-relaxed">
                 Homeopathy is a natural, holistic system of healing that has been used for centuries.
