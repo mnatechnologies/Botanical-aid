@@ -10,8 +10,8 @@ const navItems = [
   { name: 'Home', href: '/' },
   { name: 'About Us', href: '/about' },
   { name: 'Products', href: '/products', dropdown: [
-    { name: 'Mental Health Range', href: '/products?category=mental-health' },
-    { name: 'Post Treatment Skincare', href: '/products?category=post-treatment' },
+    { name: 'Mental Health Range', href: '/mental-healthrange' },
+    { name: 'Post Treatment Skincare', href: '/post-treatment-skincare' },
     { name: 'All Products', href: '/products' },
   ]},
   { name: 'FAQs', href: '/faq' },

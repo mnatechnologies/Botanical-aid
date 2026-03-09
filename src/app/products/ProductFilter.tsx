@@ -6,12 +6,12 @@ const filters = [
   { label: 'All Products', href: '/products', category: undefined },
   {
     label: 'Mental Health Range',
-    href: '/products?category=mental-health',
+    href: '/mental-healthrange',
     category: 'mental-health',
   },
   {
     label: 'Post Treatment Skincare',
-    href: '/products?category=post-treatment',
+    href: '/post-treatment-skincare',
     category: 'post-treatment',
   },
 ];

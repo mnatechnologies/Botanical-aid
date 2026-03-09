@@ -250,7 +250,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         ))}
       </div>
 
-      {(!category || category === 'mental-health') && (
+      {!category && (
         <div className="mt-8">
           <PostTreatmentBundleBanner />
         </div>

@@ -16,7 +16,7 @@ export default function CategoryShowcase() {
           {/* Category circles */}
           <div className="flex items-center gap-10 lg:gap-16 order-1 md:order-2">
             {/* Mental Health */}
-            <Link href="/products?category=mental-health" className="group flex flex-col items-center gap-3">
+            <Link href="/mental-healthrange" className="group flex flex-col items-center gap-3">
               <div className="relative w-28 h-28 lg:w-36 lg:h-36 rounded-full overflow-hidden ring-4 ring-[#7c3aed] ring-offset-2 group-hover:ring-offset-4 transition-all shadow-lg">
                 <Image
                   src="/assets/category-post-treatment.png"
@@ -32,7 +32,7 @@ export default function CategoryShowcase() {
             </Link>
 
             {/* Post Treatment */}
-            <Link href="/products?category=post-treatment" className="group flex flex-col items-center gap-3">
+            <Link href="/post-treatment-skincare" className="group flex flex-col items-center gap-3">
               <div className="relative w-28 h-28 lg:w-36 lg:h-36 rounded-full overflow-hidden ring-4 ring-[#0d9488] ring-offset-2 group-hover:ring-offset-4 transition-all shadow-lg">
                 <Image
                   src="/assets/category-mental-health.png"

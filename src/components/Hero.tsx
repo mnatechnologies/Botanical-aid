@@ -13,7 +13,7 @@ const SLIDES = [
     headline: 'Mental Health',
     subheadline: 'Range',
     description: 'Find the light and set your mind free with Botanical Aid.',
-    link: '/products?category=mental-health',
+    link: '/mental-healthrange',
   },
   {
     type: 'image' as const,
@@ -22,7 +22,7 @@ const SLIDES = [
     headline: 'Post Treatment',
     subheadline: 'Skincare',
     description: 'Comfort for today, confidence tomorrow.',
-    link: '/products?category=post-treatment',
+    link: '/post-treatment-skincare',
   },
   {
     type: 'video' as const,
