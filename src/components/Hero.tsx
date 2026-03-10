@@ -10,18 +10,18 @@ const SLIDES = [
     type: 'image' as const,
     bg: '/assets/banner04.webp',
     bgPosition: 'left center',
-    headline: 'Mental Health',
-    subheadline: 'Range',
-    description: 'Find the light and set your mind free with Botanical Aid.',
+    headline: "Healing Through ",
+    subheadline: "Nature's Touch",
+    description: 'Soothe your soul and skin with our plant-based care.',
     link: '/mental-healthrange',
   },
   {
     type: 'image' as const,
     bg: '/assets/banner02.webp',
     bgPosition: 'center center',
-    headline: 'Post Treatment',
-    subheadline: 'Skincare',
-    description: 'Comfort for today, confidence tomorrow.',
+    headline: 'Botanical Aid. Pure',
+    subheadline: 'Care. Naturally',
+    description: 'Soothe your soul and skin with our plant-based care.',
     link: '/post-treatment-skincare',
   },
   {
@@ -47,8 +47,6 @@ export default function Hero() {
   const startTimer = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
     if (SLIDES[current]?.type === 'video') {
-      // onEnded / onError handle normal advancement; this is a last-resort fallback
-      // in case the video is blocked (e.g. CORS on production) and neither fires
       timerRef.current = setTimeout(() => {
         setIsAnimating(true);
         setCurrent((prev) => (prev + 1) % total);
@@ -113,7 +111,6 @@ export default function Hero() {
       {/* Background slides */}
       {SLIDES.map((slide, i) =>
         slide.type === 'video' ? (
-          /* Video slide — autoplay loop muted, same as real site */
           <div
             key={i}
             className="absolute inset-0 transition-opacity duration-700 ease-in-out flex items-center justify-center bg-white"
@@ -131,13 +128,11 @@ export default function Hero() {
             />
           </div>
         ) : (
-          // Outer div: stable key so opacity cross-fade works
           <div
             key={i}
             className="absolute inset-0 overflow-hidden transition-opacity duration-700 ease-in-out"
             style={{ opacity: i === current ? 1 : 0 }}
           >
-            {/* Inner div: key resets when this slide becomes active → restarts Ken Burns */}
             <div
               key={i === current ? `kb-${current}` : `kb-idle-${i}`}
               className="absolute inset-0"
@@ -160,17 +155,17 @@ export default function Hero() {
         <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.25) 55%, transparent 100%)' }} />
       )}
 
-      {/* Text content */}
-      <div className="relative z-10 h-full flex items-center">
+      {/* Text content — vertically centered, left-aligned */}
+      <div className="absolute inset-0 z-10 flex items-center">
         <div className="container mx-auto px-4 lg:px-6">
-          <div className="max-w-xl">
+          <div className="relative max-w-xl">
             {SLIDES.map((slide, i) => (
               <div
                 key={i}
-                className="transition-all duration-600 ease-in-out"
                 style={{
-                  position: i === 0 ? 'relative' : 'absolute',
-                  top: i === 0 ? undefined : 0,
+                  position: i === current ? 'relative' : 'absolute',
+                  top: 0,
+                  left: 0,
                   opacity: i === current ? 1 : 0,
                   transform: i === current ? 'translateY(0)' : 'translateY(20px)',
                   transition: 'opacity 0.6s ease-in-out, transform 0.6s ease-in-out',
@@ -186,7 +181,7 @@ export default function Hero() {
                   <br />
                   {slide.subheadline}
                 </h1>
-                <p className="mt-4 text-base sm:text-lg text-white/90 drop-shadow max-w-sm">
+                <p className="mt-4 text-base sm:text-lg text-white/90 drop-shadow max-w-m">
                   {slide.description}
                 </p>
               </div>
