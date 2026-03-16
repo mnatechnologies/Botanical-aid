@@ -9,6 +9,7 @@ const SLIDES = [
   {
     type: 'image' as const,
     bg: '/assets/banner04.webp',
+    mobileBg: '/assets/banner04mobile.png',
     bgPosition: 'left center',
     headline: "Healing Through ",
     subheadline: "Nature's Touch",
@@ -18,6 +19,7 @@ const SLIDES = [
   {
     type: 'image' as const,
     bg: '/assets/banner02.webp',
+    mobileBg: '/assets/banner02mobile.png',
     bgPosition: 'center center',
     headline: 'Botanical Aid. Pure',
     subheadline: 'Care. Naturally',
@@ -27,6 +29,7 @@ const SLIDES = [
   {
     type: 'video' as const,
     bg: VIDEO_URL,
+    mobileBg: '',
     bgPosition: 'center center',
     headline: '',
     subheadline: '',
@@ -108,7 +111,7 @@ export default function Hero() {
       }}
       aria-roledescription="carousel"
     >
-      {/* Background slides */}
+      {/* Background slides — Desktop */}
       {SLIDES.map((slide, i) =>
         slide.type === 'video' ? (
           <div
@@ -133,9 +136,10 @@ export default function Hero() {
             className="absolute inset-0 overflow-hidden transition-opacity duration-700 ease-in-out"
             style={{ opacity: i === current ? 1 : 0 }}
           >
+            {/* Desktop background */}
             <div
               key={i === current ? `kb-${current}` : `kb-idle-${i}`}
-              className="absolute inset-0"
+              className="absolute inset-0 hidden md:block"
               style={{
                 backgroundImage: `url(${slide.bg})`,
                 backgroundSize: 'cover',
@@ -146,17 +150,29 @@ export default function Hero() {
                   : 'none',
               }}
             />
+            {/* Mobile background — uses baked-in text banner */}
+            {slide.mobileBg && (
+              <div
+                className="absolute inset-0 md:hidden"
+                style={{
+                  backgroundImage: `url(${slide.mobileBg})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center center',
+                  backgroundRepeat: 'no-repeat',
+                }}
+              />
+            )}
           </div>
         )
       )}
 
-      {/* Dark overlay — only on image slides */}
+      {/* Dark overlay — only on image slides, desktop only */}
       {SLIDES[current]?.type !== 'video' && (
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.25) 55%, transparent 100%)' }} />
+        <div className="absolute inset-0 hidden md:block" style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.25) 55%, transparent 100%)' }} />
       )}
 
-      {/* Text content — vertically centered, left-aligned */}
-      <div className="absolute inset-0 z-10 flex items-center">
+      {/* Text content — desktop only (mobile text is baked into banner images) */}
+      <div className="absolute inset-0 z-10 hidden md:flex items-center">
         <div className="container mx-auto px-4 lg:px-6">
           <div className="relative max-w-xl">
             {SLIDES.map((slide, i) => (
@@ -232,9 +248,9 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* Bottom CTA bar — hidden on video slide */}
+      {/* Bottom CTA bar — hidden on video slide and on mobile */}
       {SLIDES[current]?.type !== 'video' && (
-        <div className="absolute bottom-0 left-0 right-0 z-10">
+        <div className="absolute bottom-0 left-0 right-0 z-10 hidden md:block">
           <div className="container mx-auto px-4 lg:px-6 pb-8 flex items-end">
             <div className="flex gap-3">
               <Link

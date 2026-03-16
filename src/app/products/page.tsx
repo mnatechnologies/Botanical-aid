@@ -77,100 +77,72 @@ function CategoryCircles({ items }: { items: typeof mentalHealthCircles }) {
 /* ── Category-specific hero content ── */
 function MentalHealthHero() {
   return (
-    <section className="relative w-full overflow-hidden" style={{ height: '520px' }}>
-      {/* Dark atmospheric background — silhouette with radial light */}
-      <div className="absolute inset-0 bg-black">
-        <Image
-          src="/assets/hero-mental-health.webp"
-          alt=""
-          fill
-          unoptimized
-          className="object-cover"
-        />
-      </div>
-
-      {/* Left-aligned content — matches demo layout */}
-      <div className="relative z-10 h-full flex items-center">
-        <div className="container mx-auto px-6 lg:px-10">
-          <div className="max-w-xl">
-            <span
-              className="inline-block px-5 py-2 rounded text-white text-sm font-bold tracking-wider uppercase mb-6"
-              style={{ backgroundColor: '#7c3aed' }}
-            >
-              MENTAL HEALTH RANGE
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-white leading-tight mb-5">
-              Find The Light And Set Your Mind Free With Botanical Aid.
-            </h1>
-            <p className="text-white/75 text-sm sm:text-base leading-relaxed mb-8 max-w-lg">
-              Our <strong className="text-white">Mental Health</strong> range allow you to experience the profound
-              healing that natural remedies provide, helping you achieve a balanced,
-              harmonious, and healthier life.
-            </p>
-            <a
-              href="#products"
-              className="inline-block px-6 py-2.5 text-sm font-bold text-white rounded hover:opacity-90 transition-opacity"
-              style={{ backgroundColor: '#222' }}
-            >
-              EXPLORE
-            </a>
+    <>
+      {/* Desktop */}
+      <section className="relative w-full overflow-hidden hidden md:block" style={{ height: '620px' }}>
+        <div className="absolute inset-0 bg-black">
+          <Image src="/assets/hero-mental-health.webp" alt="" fill unoptimized className="object-cover" />
+        </div>
+        <div className="relative z-10 h-full flex items-center">
+          <div className="container mx-auto px-6 lg:px-10">
+            <div className="max-w-xl">
+              <span className="inline-block px-5 py-2 rounded text-white text-sm font-bold tracking-wider uppercase mb-6" style={{ backgroundColor: '#7c3aed' }}>MENTAL HEALTH RANGE</span>
+              <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-white leading-tight mb-5">Find The Light And Set Your Mind Free With Botanical Aid.</h1>
+              <p className="text-white/75 text-sm sm:text-base leading-relaxed mb-8 max-w-lg">Our <strong className="text-white">Mental Health</strong> range allow you to experience the profound healing that natural remedies provide, helping you achieve a balanced, harmonious, and healthier life.</p>
+              <a href="#products" className="inline-block px-6 py-2.5 text-sm font-bold text-white rounded hover:opacity-90 transition-opacity" style={{ backgroundColor: '#222' }}>EXPLORE</a>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      {/* Mobile */}
+      <section className="md:hidden">
+        <div className="relative w-full aspect-[4/3]">
+          <Image src="/assets/hero-mental-health.webp" alt="" fill unoptimized className="object-cover" />
+        </div>
+        <div className="px-6 py-8 text-center">
+          <span className="inline-block px-5 py-2 rounded text-white text-sm font-bold tracking-wider uppercase mb-5" style={{ backgroundColor: '#7c3aed' }}>MENTAL HEALTH RANGE</span>
+          <h1 className="text-2xl font-bold text-foreground leading-tight mb-4">Find The Light And Set Your Mind Free With Botanical Aid.</h1>
+          <p className="text-muted-foreground text-sm leading-relaxed mb-6">Our <strong className="text-foreground">Mental Health</strong> range allow you to experience the profound healing that natural remedies provide, helping you achieve a balanced, harmonious, and healthier life.</p>
+          <a href="#products" className="inline-block px-6 py-2.5 text-sm font-bold text-white rounded hover:opacity-90 transition-opacity" style={{ backgroundColor: '#222' }}>EXPLORE</a>
+        </div>
+      </section>
+    </>
   );
 }
 
 function PostTreatmentHero() {
   return (
-    <section className="relative w-full overflow-hidden" style={{ height: '520px' }}>
-      {/* Full-bleed background image — woman applying cream */}
-      <div className="absolute inset-0">
-        <Image
-          src="/assets/hero-post-treatment.avif"
-          alt=""
-          fill
-          unoptimized
-          className="object-cover"
-        />
-        {/* Subtle dark overlay on left side for text readability */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 50%, transparent 100%)',
-          }}
-        />
-      </div>
-
-      {/* Left-aligned content — matches demo layout */}
-      <div className="relative z-10 h-full flex items-center">
-        <div className="container mx-auto px-6 lg:px-10">
-          <div className="max-w-xl">
-            <span
-              className="inline-block px-5 py-2 rounded text-white text-sm font-bold tracking-wider uppercase mb-6"
-              style={{ backgroundColor: '#22c55e' }}
-            >
-              POST TREATMENT SKINCARE
-            </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-white leading-tight mb-5">
-              Comfort For Today, Confidence Tomorrow
-            </h1>
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-8 max-w-lg">
-              Our <strong className="text-white">Post Treatment</strong>
-              <br />
-              <strong className="text-white">Skincare</strong> Range
-            </p>
-            <a
-              href="#products"
-              className="inline-block px-6 py-2.5 text-sm font-bold text-white rounded hover:opacity-90 transition-opacity"
-              style={{ backgroundColor: '#222' }}
-            >
-              EXPLORE
-            </a>
+    <>
+      {/* Desktop */}
+      <section className="relative w-full overflow-hidden hidden md:block" style={{ height: '620px' }}>
+        <div className="absolute inset-0">
+          <Image src="/assets/hero-post-treatment.avif" alt="" fill unoptimized className="object-cover" />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 50%, transparent 100%)' }} />
+        </div>
+        <div className="relative z-10 h-full flex items-center">
+          <div className="container mx-auto px-6 lg:px-10">
+            <div className="max-w-xl">
+              <span className="inline-block px-5 py-2 rounded text-white text-sm font-bold tracking-wider uppercase mb-6" style={{ backgroundColor: '#22c55e' }}>POST TREATMENT SKINCARE</span>
+              <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-white leading-tight mb-5">Comfort For Today, Confidence Tomorrow</h1>
+              <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-8 max-w-lg">Our <strong className="text-white">Post Treatment</strong><br /><strong className="text-white">Skincare</strong> Range</p>
+              <a href="#products" className="inline-block px-6 py-2.5 text-sm font-bold text-white rounded hover:opacity-90 transition-opacity" style={{ backgroundColor: '#222' }}>EXPLORE</a>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      {/* Mobile */}
+      <section className="md:hidden">
+        <div className="relative w-full aspect-[4/3]">
+          <Image src="/assets/hero-post-treatment.avif" alt="" fill unoptimized className="object-cover" />
+        </div>
+        <div className="px-6 py-8 text-center">
+          <span className="inline-block px-5 py-2 rounded text-white text-sm font-bold tracking-wider uppercase mb-5" style={{ backgroundColor: '#22c55e' }}>POST TREATMENT SKINCARE</span>
+          <h1 className="text-2xl font-bold text-foreground leading-tight mb-4">Comfort For Today, Confidence Tomorrow</h1>
+          <p className="text-muted-foreground text-sm leading-relaxed mb-6">Our <strong className="text-foreground">Post Treatment Skincare</strong> Range</p>
+          <a href="#products" className="inline-block px-6 py-2.5 text-sm font-bold text-white rounded hover:opacity-90 transition-opacity" style={{ backgroundColor: '#222' }}>EXPLORE</a>
+        </div>
+      </section>
+    </>
   );
 }
 

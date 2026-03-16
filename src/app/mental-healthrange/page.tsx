@@ -23,8 +23,9 @@ export default function MentalHealthRangePage() {
 
   return (
     <div>
-      {/* Hero */}
-      <section className="relative w-full overflow-hidden" style={{ height: '520px' }}>
+      {/* Hero — Desktop: overlay layout / Mobile: stacked layout */}
+      {/* Desktop hero (hidden on mobile) */}
+      <section className="relative w-full overflow-hidden hidden md:block" style={{ height: '620px' }}>
         <div className="absolute inset-0 bg-black">
           <Image
             src="/assets/hero-mental-health.webp"
@@ -60,6 +61,42 @@ export default function MentalHealthRangePage() {
               </a>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Mobile hero (hidden on desktop) */}
+      <section className="md:hidden">
+        <div className="relative w-full aspect-[4/3]">
+          <Image
+            src="/assets/hero-mental-health.webp"
+            alt=""
+            fill
+            unoptimized
+            className="object-cover"
+          />
+        </div>
+        <div className="px-6 py-8 text-center">
+          <span
+            className="inline-block px-5 py-2 rounded text-white text-sm font-bold tracking-wider uppercase mb-5"
+            style={{ backgroundColor: '#7c3aed' }}
+          >
+            MENTAL HEALTH RANGE
+          </span>
+          <h1 className="text-2xl font-bold text-foreground leading-tight mb-4">
+            Find The Light And Set Your Mind Free With Botanical Aid.
+          </h1>
+          <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+            Our <strong className="text-foreground">Mental Health</strong> range allow you to experience the profound
+            healing that natural remedies provide, helping you achieve a balanced,
+            harmonious, and healthier life.
+          </p>
+          <a
+            href="#products"
+            className="inline-block px-6 py-2.5 text-sm font-bold text-white rounded hover:opacity-90 transition-opacity"
+            style={{ backgroundColor: '#222' }}
+          >
+            EXPLORE
+          </a>
         </div>
       </section>
 
