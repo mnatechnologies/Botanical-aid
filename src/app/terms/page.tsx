@@ -2,14 +2,17 @@ import type { Metadata } from 'next';
 import PageHero from '@/components/PageHero';
 
 export const metadata: Metadata = {
-  title: 'Terms of Conditions',
+  title: 'Terms & Conditions',
   description: 'Terms and Conditions for Botanical Aid — please read before placing an order.',
+  alternates: {
+    canonical: 'https://www.botanicalaid.com.au/terms',
+  },
 };
 
 export default function TermsPage() {
   return (
     <div>
-      <PageHero title="Terms of Conditions" imageUrl="/assets/hero-testimonials.jpg" />
+      <PageHero title="Terms & Conditions" imageUrl="/assets/hero-testimonials.jpg" />
 
       <section className="py-16 lg:py-20">
         <div className="container mx-auto px-4 lg:px-6 max-w-3xl">

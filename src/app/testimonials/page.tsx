@@ -4,9 +4,12 @@ import { testimonials } from '@/data/testimonials';
 import PageHero from '@/components/PageHero';
 
 export const metadata: Metadata = {
-  title: 'Testimonials',
+  title: 'Customer Reviews & Testimonials',
   description:
-    'Read real reviews from Botanical Aid customers about our natural wellness products.',
+    'Read real reviews from Botanical Aid customers about our mental health balms and post-treatment skincare. See how our natural wellness products have helped people across Australia.',
+  alternates: {
+    canonical: 'https://www.botanicalaid.com.au/testimonials',
+  },
 };
 
 export default function TestimonialsPage() {
@@ -28,7 +31,7 @@ export default function TestimonialsPage() {
 
   return (
     <div>
-      <PageHero title="Testimonials" imageUrl="/assets/hero-testimonials.jpg" />
+      <PageHero title="Testimonials" imageUrl="/assets/hero-contact.jpg" />
 
       <div className="container mx-auto px-4 lg:px-6 py-12">
         <div className="text-center mb-12">

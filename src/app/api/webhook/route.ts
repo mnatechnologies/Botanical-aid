@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
-import { sendOrderConfirmationEmail } from '@/lib/email';
+import { sendOrderConfirmationEmail, sendNewOrderNotificationEmail } from '@/lib/email';
 import { createClient } from '@supabase/supabase-js';
 import type Stripe from 'stripe';
 
@@ -57,8 +57,10 @@ export async function POST(request: Request) {
 
     try {
       const items = JSON.parse(itemsJson) as LineItem[];
+      const shippingCents = parseInt(paymentIntent.metadata.shippingCents || '0', 10);
+      const shippingCost = shippingCents / 100;
       const total = paymentIntent.amount / 100;
-      const subtotal = total;
+      const subtotal = total - shippingCost;
 
       const supabase = getAdminClient();
 
@@ -74,7 +76,7 @@ export async function POST(request: Request) {
           shipping_state: shippingState || '',
           shipping_postcode: shippingPostcode || '',
           subtotal,
-          shipping_cost: 0,
+          shipping_cost: shippingCost,
           total,
           status: 'paid',
         })
@@ -85,17 +87,35 @@ export async function POST(request: Request) {
         console.error('Failed to create order:', orderError);
       }
 
-      // Insert order items
+      // Insert order items – resolve slug-based IDs to DB UUIDs
       if (order) {
-        const orderItems = items.map((item) => ({
-          order_id: order.id as string,
-          product_id: item.productId,
-          variant_id: item.variantId ?? null,
-          product_name: item.name,
-          variant_name: item.variantName ?? null,
-          quantity: item.quantity,
-          unit_price: item.price,
-        }));
+        const slugIds = items
+          .map((i) => i.productId)
+          .filter((id) => !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id));
+
+        let slugToUuid: Record<string, string> = {};
+        if (slugIds.length > 0) {
+          const { data: matched } = await supabase
+            .from('products')
+            .select('id, slug')
+            .in('slug', slugIds);
+          if (matched) {
+            slugToUuid = Object.fromEntries(matched.map((p) => [p.slug as string, p.id as string]));
+          }
+        }
+
+        const orderItems = items.map((item) => {
+          const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(item.productId);
+          return {
+            order_id: order.id as string,
+            product_id: isUuid ? item.productId : (slugToUuid[item.productId] ?? null),
+            variant_id: item.variantId ?? null,
+            product_name: item.name,
+            variant_name: item.variantName ?? null,
+            quantity: item.quantity,
+            unit_price: item.price,
+          };
+        });
 
         const { error: itemsError } = await supabase
           .from('order_items')
@@ -116,8 +136,24 @@ export async function POST(request: Request) {
           quantity: item.quantity,
           price: item.price,
         })),
+        shipping: shippingCost,
         total,
         customerName: customerName || customerEmail.split('@')[0],
+      });
+
+      // Notify business of new order
+      await sendNewOrderNotificationEmail({
+        orderId: orderNumber,
+        items: items.map((item) => ({
+          name: item.variantName ? `${item.name} (${item.variantName})` : item.name,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+        shipping: shippingCost,
+        total,
+        customerName: customerName || customerEmail.split('@')[0],
+        customerEmail,
+        shippingAddress: `${shippingAddress || ''}, ${shippingCity || ''}, ${shippingState || ''} ${shippingPostcode || ''}`,
       });
     } catch (err) {
       console.error('Error processing payment_intent.succeeded:', err);

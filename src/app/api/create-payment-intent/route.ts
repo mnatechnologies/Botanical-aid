@@ -138,6 +138,11 @@ export async function POST(request: Request) {
       totalCents -= discountCents;
     }
 
+    // Calculate shipping server-side: free for orders $99+
+    const subtotalDollars = totalCents / 100;
+    const shippingCents = subtotalDollars >= 99 ? 0 : 995;
+    totalCents += shippingCents;
+
     const paymentIntent = await stripe.paymentIntents.create({
       amount: totalCents,
       currency: 'aud',
@@ -150,6 +155,7 @@ export async function POST(request: Request) {
         shippingState: shippingInfo.state,
         shippingPostcode: shippingInfo.postcode,
         items: JSON.stringify(lineItems),
+        shippingCents: String(shippingCents),
       },
     });
 

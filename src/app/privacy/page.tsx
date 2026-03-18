@@ -2,8 +2,11 @@ import type { Metadata } from 'next';
 import PageHero from '@/components/PageHero';
 
 export const metadata: Metadata = {
-  title: 'Our Privacy Policy',
+  title: 'Privacy Policy',
   description: 'Botanical Aid privacy policy — how we collect, use, and safeguard your personal information.',
+  alternates: {
+    canonical: 'https://www.botanicalaid.com.au/privacy',
+  },
 };
 
 export default function PrivacyPolicyPage() {

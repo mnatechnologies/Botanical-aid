@@ -48,6 +48,7 @@ export function getPostTreatmentBundleDiscount(items: CartItem[]): number {
 
 interface CartContextType {
   items: CartItem[];
+  isLoaded: boolean;
   addToCart: (product: Product, quantity?: number) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
@@ -119,7 +120,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [items]);
 
   return (
-    <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQuantity, clearCart, getCartCount, getCartTotal }}>
+    <CartContext.Provider value={{ items, isLoaded, addToCart, removeFromCart, updateQuantity, clearCart, getCartCount, getCartTotal }}>
       {children}
     </CartContext.Provider>
   );

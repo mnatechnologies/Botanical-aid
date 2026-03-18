@@ -9,9 +9,12 @@ import ProductFilter from './ProductFilter';
 import PageHero from '@/components/PageHero';
 
 export const metadata: Metadata = {
-  title: 'Products',
+  title: 'Shop Natural Wellness Products',
   description:
-    'Browse Botanical Aid\'s full range of natural wellness products including mental health balms and post-treatment skincare.',
+    'Browse Botanical Aid\'s full range of natural wellness products. Mental health balms for anxiety, grief, depression & focus. Post-treatment skincare for cosmetic surgery recovery. Free shipping over $99.',
+  alternates: {
+    canonical: 'https://www.botanicalaid.com.au/products',
+  },
 };
 
 interface ProductsPageProps {

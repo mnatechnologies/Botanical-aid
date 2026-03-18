@@ -8,6 +8,8 @@ import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-
 import { useCart, getLineTotal, getPostTreatmentBundleDiscount } from '@/contexts/CartContext';
 import { ShoppingBag, ArrowLeft, Loader2, Lock } from 'lucide-react';
 
+const AU_STATES = ['ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA'] as const;
+
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 );
@@ -111,7 +113,7 @@ function PaymentForm({
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, getCartTotal, clearCart } = useCart();
+  const { items, isLoaded, getCartTotal, clearCart } = useCart();
   const [shipping, setShipping] = useState<ShippingInfo>({
     name: '',
     email: '',
@@ -126,10 +128,12 @@ export default function CheckoutPage() {
   const [formError, setFormError] = useState<string | null>(null);
   const [step, setStep] = useState<'shipping' | 'payment'>('shipping');
 
-  const total = getCartTotal();
+  const cartTotal = getCartTotal();
+  const shippingCost = cartTotal >= 99 ? 0 : 9.95;
+  const total = parseFloat((cartTotal + shippingCost).toFixed(2));
 
   const handleShippingChange = useCallback(
-    (field: keyof ShippingInfo) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    (field: keyof ShippingInfo) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setShipping((prev) => ({ ...prev, [field]: e.target.value }));
     },
     []
@@ -149,6 +153,12 @@ export default function CheckoutPage() {
     // Basic email validation
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(shipping.email)) {
       setFormError('Please enter a valid email address.');
+      return;
+    }
+
+    // Australian postcode validation
+    if (!/^\d{4}$/.test(shipping.postcode)) {
+      setFormError('Please enter a valid 4-digit Australian postcode.');
       return;
     }
 
@@ -206,6 +216,14 @@ export default function CheckoutPage() {
     clearCart();
     router.push(`/order-confirmation?orderId=${orderId}&email=${encodeURIComponent(shipping.email)}`);
   };
+
+  if (!isLoaded) {
+    return (
+      <div className="max-w-2xl mx-auto px-4 py-24 text-center">
+        <Loader2 className="h-10 w-10 animate-spin text-muted-foreground mx-auto" />
+      </div>
+    );
+  }
 
   if (items.length === 0 && !paymentIntentId) {
     return (
@@ -297,14 +315,18 @@ export default function CheckoutPage() {
                   <label htmlFor="state" className="block text-sm font-medium mb-1">
                     State
                   </label>
-                  <input
+                  <select
                     id="state"
-                    type="text"
                     value={shipping.state}
                     onChange={handleShippingChange('state')}
-                    className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring"
+                    className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-ring bg-white"
                     required
-                  />
+                  >
+                    <option value="">Select state</option>
+                    {AU_STATES.map((s) => (
+                      <option key={s} value={s}>{s}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
@@ -408,7 +430,7 @@ export default function CheckoutPage() {
             <div className="border-t pt-3">
               <div className="flex justify-between text-sm text-muted-foreground mb-1">
                 <span>Shipping</span>
-                <span>Free</span>
+                <span>{shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}</span>
               </div>
               <div className="flex justify-between font-bold text-lg">
                 <span>Total</span>

@@ -5,10 +5,39 @@ import { faqSections } from '@/data/testimonials';
 import PageHero from '@/components/PageHero';
 
 export const metadata: Metadata = {
-  title: 'Frequently Asked Questions',
+  title: 'Frequently Asked Questions — Botanical Aid & Homeopathy',
   description:
-    'Find answers to common questions about Botanical Aid products, shipping, usage, and safety.',
+    'Find answers to common questions about Botanical Aid natural wellness products, mental health balms, post-treatment skincare, shipping, usage, safety, and homeopathy.',
+  alternates: {
+    canonical: 'https://www.botanicalaid.com.au/faq',
+  },
 };
+
+function FAQJsonLd() {
+  const allQuestions = faqSections.flatMap((section) =>
+    section.items.map((item) => ({
+      '@type': 'Question' as const,
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer' as const,
+        text: item.answer,
+      },
+    })),
+  );
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: allQuestions,
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
 
 export default function FAQPage() {
   const botanicalFAQ = faqSections.filter((s) => s.category === 'Botanical Aid');
@@ -16,6 +45,7 @@ export default function FAQPage() {
 
   return (
     <div>
+      <FAQJsonLd />
       <PageHero title="FAQs" imageUrl="/assets/hero-shop.png" />
 
       <div className="container mx-auto px-4 lg:px-6 py-12">

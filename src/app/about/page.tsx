@@ -3,9 +3,12 @@ import Image from 'next/image';
 import PageHero from '@/components/PageHero';
 
 export const metadata: Metadata = {
-  title: 'About Us',
+  title: 'About Us — Our Story & Mission',
   description:
-    'Learn about Botanical Aid — our story, mission, and commitment to natural wellness through botanical formulations.',
+    'Learn about Botanical Aid and founder Victoria Rabbah — a homeopath since 1999 creating natural wellness products. Discover our story, mission, and commitment to holistic healing with botanical formulations.',
+  alternates: {
+    canonical: 'https://www.botanicalaid.com.au/about',
+  },
 };
 
 export default function AboutPage() {

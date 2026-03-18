@@ -20,14 +20,121 @@ export async function generateMetadata({
   const product = getProductBySlug(slug);
   if (!product) return { title: 'Product Not Found' };
 
+  const categoryLabel =
+    product.category === 'mental-health'
+      ? 'Mental Health Balm'
+      : 'Post Treatment Skincare';
+
   return {
-    title: product.name,
-    description: product.description,
+    title: `${product.name} — ${categoryLabel}`,
+    description: product.longDescription || product.description,
     openGraph: {
-      title: product.name,
+      title: `${product.name} | Botanical Aid`,
+      description: product.description,
+      type: 'website',
+      url: `https://www.botanicalaid.com.au/products/${product.slug}`,
+      images: [
+        {
+          url: product.image,
+          alt: product.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${product.name} | Botanical Aid`,
       description: product.description,
     },
+    alternates: {
+      canonical: `https://www.botanicalaid.com.au/products/${product.slug}`,
+    },
   };
+}
+
+function ProductJsonLd({ slug }: { slug: string }) {
+  const product = getProductBySlug(slug);
+  if (!product) return null;
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.longDescription || product.description,
+    image: `https://www.botanicalaid.com.au${product.image}`,
+    url: `https://www.botanicalaid.com.au/products/${product.slug}`,
+    brand: {
+      '@type': 'Brand',
+      name: 'Botanical Aid',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: product.price,
+      priceCurrency: 'AUD',
+      availability: 'https://schema.org/InStock',
+      url: `https://www.botanicalaid.com.au/products/${product.slug}`,
+      seller: {
+        '@type': 'Organization',
+        name: 'Botanical Aid',
+      },
+    },
+    category:
+      product.category === 'mental-health'
+        ? 'Mental Health Balms'
+        : 'Post Treatment Skincare',
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
+}
+
+function BreadcrumbJsonLd({ slug }: { slug: string }) {
+  const product = getProductBySlug(slug);
+  if (!product) return null;
+
+  const categoryLabel =
+    product.category === 'mental-health'
+      ? 'Mental Health Range'
+      : 'Post Treatment Skincare';
+  const categoryPath =
+    product.category === 'mental-health'
+      ? '/mental-healthrange'
+      : '/post-treatment-skincare';
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.botanicalaid.com.au',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: categoryLabel,
+        item: `https://www.botanicalaid.com.au${categoryPath}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: product.name,
+        item: `https://www.botanicalaid.com.au/products/${product.slug}`,
+      },
+    ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+    />
+  );
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
@@ -41,6 +148,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <div className="container mx-auto px-4 lg:px-6 py-12">
+      <ProductJsonLd slug={slug} />
+      <BreadcrumbJsonLd slug={slug} />
       <ProductDetail product={product} />
 
       {product.category === 'post-treatment' && (

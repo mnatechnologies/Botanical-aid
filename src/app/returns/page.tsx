@@ -2,8 +2,11 @@ import type { Metadata } from 'next';
 import PageHero from '@/components/PageHero';
 
 export const metadata: Metadata = {
-  title: 'Our Returns Policy',
-  description: 'Botanical Aid returns policy — information about claims and refunds.',
+  title: 'Returns Policy',
+  description: 'Botanical Aid returns policy — information about claims, refunds, and exchanges for our natural wellness products.',
+  alternates: {
+    canonical: 'https://www.botanicalaid.com.au/returns',
+  },
 };
 
 export default function ReturnsPage() {

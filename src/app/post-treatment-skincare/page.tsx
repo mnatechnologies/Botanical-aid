@@ -6,9 +6,12 @@ import ProductCard from '@/components/ProductCard';
 import PostTreatmentBundleBanner from '@/components/PostTreatmentBundleBanner';
 
 export const metadata: Metadata = {
-  title: 'Post Treatment Skincare',
+  title: 'Post Treatment Skincare — Cosmetic & Surgery Recovery Creams',
   description:
-    'Explore Botanical Aid\'s Post Treatment Skincare range — natural creams and balms for post-cosmetic, post-surgery, and lip filler recovery.',
+    'Explore Botanical Aid\'s Post Treatment Skincare range — natural recovery creams and balms for post-cosmetic procedures, post-surgery care, and lip filler recovery. Enriched with Arnica & botanical ingredients.',
+  alternates: {
+    canonical: 'https://www.botanicalaid.com.au/post-treatment-skincare',
+  },
 };
 
 /* ── Product sub-category circles ── */

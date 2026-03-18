@@ -6,12 +6,37 @@ import PageHero from '@/components/PageHero';
 export const metadata: Metadata = {
   title: 'Contact Us',
   description:
-    "Get in touch with Botanical Aid. We'd love to hear from you about our natural wellness products.",
+    "Get in touch with Botanical Aid. Call 1300 895 132 or email info@botanicalaid.com.au. Located in Bella Vista, NSW 2153.",
+  alternates: {
+    canonical: 'https://www.botanicalaid.com.au/contact',
+  },
+};
+
+const localBusinessJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Botanical Aid',
+  url: 'https://www.botanicalaid.com.au',
+  email: 'info@botanicalaid.com.au',
+  telephone: '1300 895 132',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Bella Vista',
+    addressRegion: 'NSW',
+    postalCode: '2153',
+    addressCountry: 'AU',
+  },
+  description:
+    'Natural wellness products including mental health balms and post-treatment skincare. Australian-made, vegan & cruelty-free.',
 };
 
 export default function ContactPage() {
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+      />
       <PageHero title="Contact Us" imageUrl="/assets/hero-contact.jpg" />
       <div className="container mx-auto px-4 lg:px-6 py-12">
         <div className="text-center mb-12">

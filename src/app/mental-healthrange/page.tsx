@@ -5,9 +5,12 @@ import { getProductsByCategory } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
 
 export const metadata: Metadata = {
-  title: 'Mental Health Range',
+  title: 'Mental Health Range — Natural Balms for Anxiety, Grief & Focus',
   description:
-    'Explore Botanical Aid\'s Mental Health range — natural balms and creams to support anxiety, grief, focus, and emotional well-being.',
+    'Explore Botanical Aid\'s Mental Health range — natural homeopathic balms and creams to support anxiety, grief, depression, focus and emotional well-being. Australian-made, vegan & cruelty-free.',
+  alternates: {
+    canonical: 'https://www.botanicalaid.com.au/mental-healthrange',
+  },
 };
 
 /* ── Product sub-category circles ── */

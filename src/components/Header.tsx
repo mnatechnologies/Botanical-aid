@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
-import { ShoppingCart, ChevronDown, Search } from 'lucide-react';
+import { ShoppingCart, ChevronDown } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 
 const navItems = [
@@ -147,10 +147,6 @@ export default function Header() {
 
             {/* Right actions */}
             <div className="hidden lg:flex items-center gap-2">
-              <button className="w-9 h-9 flex items-center justify-center text-gray-500 hover:text-[#1a3a8f] transition-colors rounded-full hover:bg-gray-50" aria-label="Search">
-                <Search className="h-4.5 w-4.5" />
-              </button>
-
               <Link href="/cart" className="relative w-9 h-9 flex items-center justify-center text-gray-500 hover:text-[#1a3a8f] transition-colors rounded-full hover:bg-gray-50" aria-label="Cart">
                 <ShoppingCart className="h-4.5 w-4.5" />
                 {cartCount > 0 && (
