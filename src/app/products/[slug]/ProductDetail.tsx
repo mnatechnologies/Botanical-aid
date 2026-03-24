@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ShoppingCart, ArrowLeft, Truck } from 'lucide-react';
+import { ShoppingCart, ArrowLeft, Truck, ChevronDown } from 'lucide-react';
 import { toast } from 'sonner';
 import { useCart } from '@/contexts/CartContext';
 import { type Product, type ProductVariant } from '@/types/product';
@@ -12,6 +12,43 @@ const categoryLabels: Record<Product['category'], string> = {
   'mental-health': 'Mental Health Range',
   'post-treatment': 'Post Treatment Skincare',
 };
+
+/* ── Accordion section component ───────────────────────────────── */
+function Accordion({
+  title,
+  children,
+  defaultOpen = false,
+}: {
+  title: string;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
+
+  return (
+    <div className="border-t border-gray-200">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between py-4 text-left cursor-pointer group"
+      >
+        <span className="text-sm font-bold uppercase tracking-wide text-foreground group-hover:text-[#1a3a8f] transition-colors">
+          {title}
+        </span>
+        <ChevronDown
+          className={`h-5 w-5 text-gray-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+        />
+      </button>
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+          open ? 'max-h-[5000px] opacity-100 pb-6' : 'max-h-0 opacity-0'
+        }`}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
 
 export default function ProductDetail({ product }: { product: Product }) {
   const { addToCart } = useCart();
@@ -172,28 +209,74 @@ export default function ProductDetail({ product }: { product: Product }) {
               ? `Add ${selectedVariant.quantity} to Cart — $${selectedVariant.totalPrice.toFixed(2)}`
               : `Add to Cart — $${selectedVariant.totalPrice.toFixed(2)}`}
           </button>
+        </div>
+      </div>
 
-          {/* Ingredients */}
-          <div className="mt-8 border-t border-border pt-6">
-            <h3 className="font-semibold text-foreground mb-3">Ingredients</h3>
-            <div className="flex flex-wrap gap-2">
-              {product.ingredients.map((ing) => (
-                <span
-                  key={ing}
-                  className="px-3 py-1 rounded-full bg-muted text-sm text-muted-foreground"
-                >
-                  {ing}
-                </span>
+      {/* ── Accordion Sections ─────────────────────────────────── */}
+      <div className="mt-12 max-w-3xl">
+        {/* How to Use */}
+        <Accordion title="How to Use This Product">
+          <div className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+            {product.usage}
+          </div>
+        </Accordion>
+
+        {/* Ingredients */}
+        <Accordion title="Ingredients" defaultOpen>
+          <div className="space-y-6">
+            {product.ingredients.map((ing) => (
+              <div key={ing.name} className="flex gap-4">
+                {ing.image && (
+                  <div className="relative w-24 h-24 rounded-lg overflow-hidden shrink-0">
+                    <Image
+                      src={ing.image}
+                      alt={ing.name}
+                      fill
+                      unoptimized
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+                <div className="flex-1">
+                  <p className="text-sm text-foreground leading-relaxed">
+                    <strong className="text-foreground">{ing.name}</strong>
+                    {ing.description ? `, ${ing.description.charAt(0).toLowerCase()}${ing.description.slice(1)}` : ''}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Accordion>
+
+        {/* Warning */}
+        {product.warning && product.warning.length > 0 && (
+          <Accordion title="Warning">
+            <ul className="space-y-1.5">
+              {product.warning.map((item, i) => (
+                <li key={i} className="text-sm text-muted-foreground leading-relaxed flex gap-2">
+                  <span className="text-gray-400 shrink-0">•</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </Accordion>
+        )}
+
+        {/* Health and Safety Disclaimer */}
+        {product.disclaimer && product.disclaimer.length > 0 && (
+          <Accordion title="Health and Safety Disclaimer">
+            <div className="space-y-3">
+              {product.disclaimer.map((item, i) => (
+                <p key={i} className="text-sm text-muted-foreground leading-relaxed">
+                  {item}
+                </p>
               ))}
             </div>
-          </div>
+          </Accordion>
+        )}
 
-          {/* Usage */}
-          <div className="mt-6 border-t border-border pt-6">
-            <h3 className="font-semibold text-foreground mb-3">How to Use</h3>
-            <p className="text-muted-foreground leading-relaxed">{product.usage}</p>
-          </div>
-        </div>
+        {/* Bottom border */}
+        <div className="border-t border-gray-200" />
       </div>
     </div>
   );

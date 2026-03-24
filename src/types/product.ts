@@ -7,6 +7,12 @@ export interface ProductVariant {
   totalPrice: number;  // quantity × unitPrice
 }
 
+export interface Ingredient {
+  name: string;
+  description: string;
+  image?: string;       // path to ingredient image
+}
+
 export interface Product {
   id: string;
   slug: string;
@@ -17,9 +23,11 @@ export interface Product {
   originalPrice?: number;   // For intro/sale pricing — shows as strikethrough
   category: 'mental-health' | 'post-treatment';
   image: string;
-  ingredients: string[];
+  ingredients: Ingredient[];
   usage: string;
   size: string;
   variants: ProductVariant[];
   maxQuantity?: number;
+  warning?: string[];
+  disclaimer?: string[];
 }

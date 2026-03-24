@@ -48,8 +48,36 @@ export const POST_TREATMENT_BUNDLE = {
   label: 'Post Treatment Bundle Discount',
 };
 
+/* ── shared warning & disclaimer ──────────────────────────────── */
+
+const MENTAL_HEALTH_WARNING = [
+  'Always read the label and follow the directions for use.',
+  'For external use only.',
+  'Not to be taken orally.',
+  'If symptoms persist consult your health practitioner.',
+  'Avoid contact with eyes and open wounds.',
+  'Do NOT replace cream with your medications.',
+  'Should complement professional mental health treatment, not replace it.',
+];
+
+const MENTAL_HEALTH_DISCLAIMER = [
+  'Our natural health products are designed to complement wellbeing and self-care. They are not intended to replace prescribed psychotherapy medications or ongoing psychotherapy sessions.',
+  'It is essential that individuals continue to follow the treatment plan recommended by their healthcare providers, including psychiatrists, psychologists, and general practitioners. These professionals play a critical role in monitoring progress, adjusting care when needed, and ensuring safety.',
+  'Natural products may provide supportive benefits, but they should always be used alongside — not as a substitute for — evidence-based medical treatments.',
+  'If you are currently undergoing treatment or taking prescribed medication, please consult your healthcare professional before introducing any new products into your routine.',
+];
+
+const POST_TREATMENT_WARNING = [
+  'For external use only.',
+  'Patch test recommended before first use.',
+  'Avoid contact with eyes.',
+  'Consult your healthcare provider if pregnant or breastfeeding.',
+  'Not a substitute for medical treatment.',
+  'Store in a cool, dry place away from direct sunlight.',
+];
+
 export const products: Product[] = [
-  // Mental Health Range
+  // ── Mental Health Range ───────────────────────────────────────
   {
     id: 'focus-and-clarity',
     slug: 'focus-and-clarity',
@@ -60,11 +88,47 @@ export const products: Product[] = [
     originalPrice: 24.95,
     category: 'mental-health',
     image: '/assets/focus-clarity.jpg',
-    ingredients: ['Lycopodium', 'Baryta Carbonica', 'Kali Phosphoricum', 'Lavender Floral Water', 'Sage Oil', 'Lemon Floral Water', 'Orange Floral Water'],
-    usage: 'Apply small amounts to temples, chest, and wrists. Allow 20 minutes for absorption. Can reapply up to four times daily.',
+    ingredients: [
+      {
+        name: 'Lycopodium',
+        description: 'A homeopathic remedy derived from the spores of the clubmoss plant, often used to support mental clarity and focus. It is believed to help individuals experiencing mental fatigue, lack of confidence, or difficulty concentrating. Lycopodium is known for its ability to enhance cognitive function and promote a sense of calm.',
+        image: '/assets/ingredients/lycopodium.jpg',
+      },
+      {
+        name: 'Baryta Carbonica',
+        description: 'A homeopathic remedy that supports focus and clarity by addressing mental fog and forgetfulness. It also promotes emotional balance, improving confidence and decisiveness. Commonly used for developmental delays and age-related cognitive decline, this remedy offers holistic support for mental sharpness and clarity.',
+      },
+      {
+        name: 'Kali Phosphoricum',
+        description: 'A homeopathic remedy that supports focus and clarity by enhancing memory, concentration, and mental sharpness. It helps reduce stress and nervous tension, revitalises the nervous system, and is ideal for mental exhaustion caused by overwork or emotional strain.',
+      },
+      {
+        name: 'Lavender Floral Water',
+        description: 'Known for its calming properties, lavender floral water helps improve concentration by reducing stress and anxiety. It promotes better sleep quality, which in turn supports mental clarity and focus during the day.',
+        image: '/assets/ingredients/lavender.jpg',
+      },
+      {
+        name: 'Sage Oil',
+        description: 'Stimulates the brain to enhance focus and concentration. It helps reduce mental fatigue and is rich in antioxidants that support overall cognitive health.',
+        image: '/assets/ingredients/sage-oil.jpg',
+      },
+      {
+        name: 'Lemon Floral Water',
+        description: 'With its fresh citrus aroma, lemon floral water stimulates the mind and uplifts mood. It helps reduce mental fatigue and promotes a sense of alertness and clarity.',
+        image: '/assets/ingredients/lemon-floral.jpg',
+      },
+      {
+        name: 'Orange Floral Water',
+        description: 'An uplifting citrus aroma that reduces stress and anxiety while boosting mood and energy levels. It helps create a positive and focused mindset.',
+        image: '/assets/ingredients/orange-floral.png',
+      },
+    ],
+    usage: 'Apply a small amount of cream to your temples, chest, and wrists. These areas are especially receptive to calming and clarifying effects. Take a moment to breathe deeply and allow the cream to absorb — about 20 minutes is ideal. You can reapply as needed, up to four times a day, for continued support.\n\nIf symptoms persist or feel overwhelming, it\'s always best to check in with your healthcare practitioner to make sure you\'re getting the care you need.',
     size: '30g bottle',
     variants: makeMHVariants('Focus & Clarity Cream', 19.95),
     maxQuantity: 4,
+    warning: MENTAL_HEALTH_WARNING,
+    disclaimer: MENTAL_HEALTH_DISCLAIMER,
   },
   {
     id: 'grief',
@@ -76,11 +140,37 @@ export const products: Product[] = [
     originalPrice: 24.95,
     category: 'mental-health',
     image: '/assets/grief.jpg',
-    ingredients: ['Ignatia Amara', 'Natrum Muriaticum', 'Neroli Oil', 'Ylang Ylang', 'Rose Oil'],
-    usage: 'Apply a small amount to temples, chest, and wrists. Wait 20 minutes before reapplying. Use up to 4 times daily.',
+    ingredients: [
+      {
+        name: 'Ignatia Amara',
+        description: 'A homeopathic remedy derived from St. Ignatius bean seeds, used to support emotional healing during grief and loss. It helps ease feelings of sadness, emotional shock, and the sense of heaviness that accompanies bereavement.',
+        image: '/assets/ingredients/ignatia-amara.png',
+      },
+      {
+        name: 'Natrum Muriaticum',
+        description: 'A gentle remedy for navigating grief that helps release suppressed emotions, eases heartbreak and loneliness, and addresses physical symptoms like fatigue or headaches that often accompany emotional distress.',
+      },
+      {
+        name: 'Neroli Oil',
+        description: 'An essential oil from bitter orange blossoms, powerful for emotional healing during grief. Its calming and uplifting aroma reduces sadness and anxiety, and helps lower stress hormones like cortisol.',
+      },
+      {
+        name: 'Ylang Ylang',
+        description: 'A deeply soothing essential oil for grief comfort. Its sweet floral aroma balances emotions and calms the heart, promoting a sense of peace and acceptance.',
+        image: '/assets/ingredients/ylang-ylang.jpg',
+      },
+      {
+        name: 'Rose Oil',
+        description: 'A deeply comforting essential oil for emotional healing. Its gentle floral aroma soothes the heart and reduces sadness, promoting emotional resilience and self-compassion.',
+        image: '/assets/ingredients/rose-oil.png',
+      },
+    ],
+    usage: 'Gently massage a small amount of the cream onto temples, chest, and wrists. Allow 20 minutes, then reapply as needed. The product can be used up to 4 times a day for ongoing support.\n\nFor persistent symptoms, consult with your healthcare practitioner to ensure your wellbeing.',
     size: '30g bottle',
     variants: makeMHVariants('Grief Cream', 19.95),
     maxQuantity: 4,
+    warning: MENTAL_HEALTH_WARNING,
+    disclaimer: MENTAL_HEALTH_DISCLAIMER,
   },
   {
     id: 'mild-anxiety',
@@ -92,11 +182,42 @@ export const products: Product[] = [
     originalPrice: 24.95,
     category: 'mental-health',
     image: '/assets/mild-anxiety.jpg',
-    ingredients: ['Aconitum Napellus', 'Argentum Nitricum', 'Gelsemium', 'Lavender Essential Oil', 'Bergamot Essential Oil', 'Frankincense Essential Oil'],
-    usage: 'Apply to wrists, temples, or chest as needed. Take slow, deep breaths to enhance the calming effect. Allow 20 minutes before reapplying.',
+    ingredients: [
+      {
+        name: 'Argentum Nitricum',
+        description: 'A homeopathic remedy from silver nitrate, effective for managing anticipatory anxiety, performance anxiety, and panic attacks. It also addresses fears of heights, crowds, and enclosed spaces.',
+        image: '/assets/ingredients/lycopodium.jpg',
+      },
+      {
+        name: 'Arsenicum Album',
+        description: 'A homeopathic remedy for anxiety with restlessness and fear. Used for health anxiety and fear of being alone, it helps with excessive worry about small matters and promotes a sense of calm.',
+      },
+      {
+        name: 'Kali Phosphoricum',
+        description: 'Known for its calming effects on the nervous system, helping manage anxiety and stress. Particularly beneficial for mental exhaustion and irritability from overwork or emotional strain.',
+      },
+      {
+        name: 'Bergamot Oil',
+        description: 'Known for its calming and uplifting properties, bergamot oil reduces stress and anxiety by promoting relaxation and improving mood.',
+        image: '/assets/ingredients/bergamot.jpg',
+      },
+      {
+        name: 'Ylang Ylang',
+        description: 'An essential oil with calming and mood-enhancing properties that helps reduce anxiety and improves overall well-being.',
+        image: '/assets/ingredients/ylang-ylang.jpg',
+      },
+      {
+        name: 'Clary Sage',
+        description: 'With calming and soothing properties, clary sage reduces anxiety and stress. It promotes relaxation and improves sleep quality by easing nervous tension.',
+        image: '/assets/ingredients/clary-sage.jpg',
+      },
+    ],
+    usage: 'Gently massage a small amount of the cream onto temples, chest, and wrists. Allow 20 minutes, then reapply as needed. The product can be used up to 4 times a day for ongoing support.\n\nFor persistent symptoms, consult with your healthcare practitioner to ensure your wellbeing.',
     size: '30g bottle',
     variants: makeMHVariants('Mild Anxiety Cream', 19.95),
     maxQuantity: 4,
+    warning: MENTAL_HEALTH_WARNING,
+    disclaimer: MENTAL_HEALTH_DISCLAIMER,
   },
   {
     id: 'mild-depression',
@@ -108,14 +229,49 @@ export const products: Product[] = [
     originalPrice: 24.95,
     category: 'mental-health',
     image: '/assets/mild-depression.jpg',
-    ingredients: ['Aurum Metallicum', 'Sepia', 'Pulsatilla', 'Sweet Orange Essential Oil', 'Clary Sage Essential Oil', 'Geranium Essential Oil'],
-    usage: 'Apply generously to pulse points. Use in the morning and throughout the day as desired. Allow 20 minutes before reapplying.',
+    ingredients: [
+      {
+        name: 'Pulsatilla',
+        description: 'Derived from the pasqueflower, this homeopathic remedy addresses emotional imbalances including depression symptoms. It is suited for mood swings and tearfulness, providing gentle and nurturing effects.',
+        image: '/assets/ingredients/lycopodium.jpg',
+      },
+      {
+        name: 'Ignatia Amara',
+        description: 'From St. Ignatius bean seeds, widely used for depression linked to grief or emotional shock. Often referred to as "Natural Prozac" for its ability to address suppressed emotions.',
+      },
+      {
+        name: 'Natrum Muriaticum',
+        description: 'A homeopathic remedy from sodium chloride, used for depression linked to grief and emotional sensitivity. Suited for those who prefer solitude and tend to suppress their feelings.',
+      },
+      {
+        name: 'Kali Phosphoricum',
+        description: 'Renowned for emotional and mental wellbeing support, particularly for depression from exhaustion or overwork. Known as a "nerve tonic" for its ability to calm the nervous system.',
+      },
+      {
+        name: 'Lavender Oil',
+        description: 'Helps with depression by improving mood, reducing stress and anxiety, and promoting better sleep quality.',
+        image: '/assets/ingredients/lavender.jpg',
+      },
+      {
+        name: 'Chamomile Oil',
+        description: 'Relieves anxiety and stress, improves mood, and promotes restful sleep — all of which are essential for managing mild depression.',
+        image: '/assets/ingredients/chamomile.jpg',
+      },
+      {
+        name: 'Ginger Oil',
+        description: 'Provides mental health support with its warming and stimulating properties that uplift mood and reduce feelings of sadness.',
+        image: '/assets/ingredients/ginger-oil.jpg',
+      },
+    ],
+    usage: 'Apply a small amount of cream to temples, chest, and wrists. These areas are especially receptive to calming and clarifying effects. Take a moment to breathe deeply and allow the cream to absorb — about 20 minutes is ideal. You can reapply as needed, up to four times a day.\n\nIf symptoms persist, consult with your healthcare practitioner to ensure proper care.',
     size: '30g bottle',
     variants: makeMHVariants('Mild Depression Cream', 19.95),
     maxQuantity: 4,
+    warning: MENTAL_HEALTH_WARNING,
+    disclaimer: MENTAL_HEALTH_DISCLAIMER,
   },
 
-  // Post Treatment Skincare Range
+  // ── Post Treatment Skincare Range ─────────────────────────────
   {
     id: 'post-cosmetic-cream',
     slug: 'post-cosmetic-cream',
@@ -125,10 +281,30 @@ export const products: Product[] = [
     price: 49.96,
     category: 'post-treatment',
     image: '/assets/post-cosmetic-cream.jpg',
-    ingredients: ['Arnica Montana', 'Calendula', 'Aloe Vera', 'Vitamin E', 'Chamomile Extract', 'Shea Butter'],
-    usage: 'Apply gently to treated areas twice daily or as directed by your practitioner. Avoid direct sunlight on treated areas.',
+    ingredients: [
+      {
+        name: 'Calendula',
+        description: 'A powerful homeopathic remedy known for its anti-inflammatory and healing properties. Calendula helps soothe irritation, reduce redness, and promote the natural regeneration of skin tissue.',
+        image: '/assets/ingredients/calendula.jpg',
+      },
+      {
+        name: 'Ginger Infusion',
+        description: 'Rich in antioxidants, ginger enhances circulation and aids in reducing swelling, while also providing a subtle warming effect to comfort the skin.',
+      },
+      {
+        name: 'Frangipani Extract',
+        description: 'Known for its deeply hydrating and rejuvenating properties, frangipani adds a touch of luxury while helping to calm and restore balance to the skin.',
+      },
+      {
+        name: 'Arnica Montana',
+        description: 'A flowering herb used for centuries for healing. It reduces bruising and swelling from injuries and surgeries, eases muscle pain, and has powerful anti-inflammatory properties.',
+        image: '/assets/ingredients/arnica.jpg',
+      },
+    ],
+    usage: 'Apply a small amount to clean, dry skin over the treated area, gently massaging until absorbed. Can be used up to 4 times a day.',
     size: '30g bottle',
     variants: makeSingleVariant(49.96),
+    warning: POST_TREATMENT_WARNING,
   },
   {
     id: 'post-lip-filler-balm',
@@ -139,10 +315,40 @@ export const products: Product[] = [
     price: 6.95,
     category: 'post-treatment',
     image: '/assets/post-lip-balm.jpg',
-    ingredients: ['Arnica Montana', 'Manuka Honey', 'Beeswax', 'Vitamin E', 'Coconut Oil', 'Calendula Extract'],
+    ingredients: [
+      {
+        name: 'Calendula Coconut Oil',
+        description: 'A soothing base ingredient that combines the healing properties of calendula with the nourishing benefits of coconut oil for post-procedure lip care.',
+      },
+      {
+        name: 'Lanolin',
+        description: 'A naturally derived moisturiser that provides deep hydration and creates a protective barrier on the lips.',
+      },
+      {
+        name: 'Almond Sweet Oil',
+        description: 'A gentle, nourishing oil that softens and hydrates the delicate skin of the lips.',
+      },
+      {
+        name: 'Cocoa Butter',
+        description: 'Rich and moisturising, cocoa butter helps protect and heal dry or damaged lip tissue.',
+      },
+      {
+        name: 'Beeswax',
+        description: 'A natural wax that locks in moisture and provides a protective barrier while allowing the skin to breathe.',
+      },
+      {
+        name: 'Shea Butter',
+        description: 'A deeply nourishing butter rich in vitamins A and E that promotes healing and hydration.',
+      },
+      {
+        name: 'Vitamin E Acetate',
+        description: 'A potent antioxidant that supports skin health, reduces inflammation, and helps protect against environmental damage.',
+      },
+    ],
     usage: 'Apply liberally to lips as needed. Especially recommended immediately after and in the days following lip filler procedures.',
     size: '10g',
     variants: makeSingleVariant(6.95),
+    warning: POST_TREATMENT_WARNING,
   },
   {
     id: 'post-surgery-care-cream',
@@ -153,10 +359,30 @@ export const products: Product[] = [
     price: 69.95,
     category: 'post-treatment',
     image: '/assets/post-surgery-care.jpg',
-    ingredients: ['Arnica Montana', 'Calendula', 'Hypericum', 'Centella Asiatica', 'Rosehip Oil', 'Vitamin E'],
-    usage: 'Apply a thin layer to clean skin around the surgical area twice daily. Do not apply to open wounds or stitches. Wait until initial healing is complete.',
+    ingredients: [
+      {
+        name: 'Calendula',
+        description: 'Also known as Calendula officinalis or "pot marigold," a vibrant flowering plant celebrated for its healing properties. Its anti-inflammatory action reduces redness and swelling, accelerates skin repair for cuts, burns, and abrasions, provides antimicrobial protection, and deeply hydrates and rejuvenates the skin.',
+        image: '/assets/ingredients/calendula.jpg',
+      },
+      {
+        name: 'Arnica Montana',
+        description: 'A flowering herb used for centuries for healing. It reduces bruising and swelling from injuries and surgeries, eases muscle pain and soreness, contains helenalin for powerful anti-inflammatory effects, and supports wound healing in diluted forms.',
+        image: '/assets/ingredients/arnica.jpg',
+      },
+      {
+        name: 'Ginger Infusion',
+        description: 'Rich in antioxidants, ginger enhances circulation, reduces swelling, and provides a subtle warming effect to comfort and soothe the skin.',
+      },
+      {
+        name: 'Frangipani Extract',
+        description: 'Known for its deeply hydrating and rejuvenating properties, frangipani helps calm and restore balance to the skin during the recovery process.',
+      },
+    ],
+    usage: 'Apply a thin layer to clean skin around the surgical area twice daily or as directed by your practitioner. Do not apply to open wounds or stitches. Wait until initial healing is complete.',
     size: '50ml bottle',
     variants: makeSingleVariant(69.95),
+    warning: POST_TREATMENT_WARNING,
   },
 ];
 
