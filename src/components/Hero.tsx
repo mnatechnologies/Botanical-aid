@@ -14,7 +14,7 @@ const SLIDES = [
     headline: "Healing Through ",
     subheadline: "Nature's Touch",
     description: 'Soothe your soul and skin with our plant-based care.',
-    link: '/mental-healthrange',
+    link: '/mental-health-range',
   },
   {
     type: 'image' as const,
@@ -31,16 +31,45 @@ const SLIDES = [
     bg: VIDEO_URL,
     mobileBg: '',
     bgPosition: 'center center',
-    headline: '',
-    subheadline: '',
-    description: '',
-    link: '',
+    headline: 'Pure Care,',
+    subheadline: 'Naturally',
+    description: 'Homeopathic blends and botanical oils, made in Australia.',
+    link: '/products',
   },
 ];
 
 const SLIDE_INTERVAL = 6000;
 
-export default function Hero() {
+export type HeroCopy = Partial<{
+  hero_slide1_headline: string;
+  hero_slide1_subheadline: string;
+  hero_slide1_description: string;
+  hero_slide2_headline: string;
+  hero_slide2_subheadline: string;
+  hero_slide2_description: string;
+  hero_slide3_headline: string;
+  hero_slide3_subheadline: string;
+  hero_slide3_description: string;
+  hero_cta_label: string;
+  images_hero_slide1_image: string;
+  images_hero_slide1_mobile_image: string;
+  images_hero_slide2_image: string;
+  images_hero_slide2_mobile_image: string;
+}>;
+
+export default function Hero({ copy = {} }: { copy?: HeroCopy }) {
+  const slides = SLIDES.map((slide, i) => {
+    const n = i + 1;
+    return {
+      ...slide,
+      headline: copy[`hero_slide${n}_headline` as keyof HeroCopy] || slide.headline,
+      subheadline: copy[`hero_slide${n}_subheadline` as keyof HeroCopy] || slide.subheadline,
+      description: copy[`hero_slide${n}_description` as keyof HeroCopy] || slide.description,
+      bg: slide.type === 'video' ? slide.bg : copy[`images_hero_slide${n}_image` as keyof HeroCopy] || slide.bg,
+      mobileBg: copy[`images_hero_slide${n}_mobile_image` as keyof HeroCopy] || slide.mobileBg,
+    };
+  });
+
   const [current, setCurrent] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -53,7 +82,7 @@ export default function Hero() {
       timerRef.current = setTimeout(() => {
         setIsAnimating(true);
         setCurrent((prev) => (prev + 1) % total);
-      }, 15000) as unknown as ReturnType<typeof setInterval>;
+      }, 9000) as unknown as ReturnType<typeof setInterval>;
       return;
     }
     timerRef.current = setInterval(() => {
@@ -98,8 +127,8 @@ export default function Hero() {
 
   return (
     <section
-      className="relative w-full overflow-hidden transition-[height] duration-700 ease-in-out"
-      style={{ height: SLIDES[current]?.type === 'video' ? '320px' : '520px' }}
+      className="relative w-full overflow-hidden"
+      style={{ height: '520px' }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={(e) => { touchStart.current = e.touches[0].clientX; }}
@@ -112,7 +141,7 @@ export default function Hero() {
       aria-roledescription="carousel"
     >
       {/* Background slides — Desktop */}
-      {SLIDES.map((slide, i) =>
+      {slides.map((slide, i) =>
         slide.type === 'video' ? (
           <div
             key={i}
@@ -172,10 +201,10 @@ export default function Hero() {
       )}
 
       {/* Text content — desktop only (mobile text is baked into banner images) */}
-      <div className="absolute inset-0 z-10 hidden md:flex items-center">
+      <div className={`absolute inset-0 z-10 items-center ${SLIDES[current]?.type === 'video' ? 'flex' : 'hidden md:flex'}`}>
         <div className="container mx-auto px-4 lg:px-6">
           <div className="relative max-w-xl">
-            {SLIDES.map((slide, i) => (
+            {slides.map((slide, i) => (
               <div
                 key={i}
                 style={{
@@ -192,12 +221,12 @@ export default function Hero() {
                 aria-roledescription="slide"
                 aria-hidden={i !== current}
               >
-                <h1 className="text-4xl sm:text-5xl lg:text-[60px] font-bold text-white leading-[1.1] tracking-tight drop-shadow-lg">
+                <h1 className={`text-4xl sm:text-5xl lg:text-[60px] font-bold leading-[1.1] tracking-tight ${slide.type === 'video' ? 'text-[#1a3a8f]' : 'text-white drop-shadow-lg'}`}>
                   {slide.headline}
                   <br />
                   {slide.subheadline}
                 </h1>
-                <p className="mt-4 text-base sm:text-lg text-white/90 drop-shadow max-w-m">
+                <p className={`mt-4 text-base sm:text-lg max-w-m ${slide.type === 'video' ? 'text-[#1a3a8f]/80' : 'text-white/90 drop-shadow'}`}>
                   {slide.description}
                 </p>
               </div>
@@ -248,22 +277,20 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* Bottom CTA bar — hidden on video slide and on mobile */}
-      {SLIDES[current]?.type !== 'video' && (
-        <div className="absolute bottom-0 left-0 right-0 z-10 hidden md:block">
+      {/* Bottom CTA bar — mobile image slides bake the CTA into the banner art */}
+      <div className={`absolute bottom-0 left-0 right-0 z-10 ${SLIDES[current]?.type === 'video' ? 'block' : 'hidden md:block'}`}>
           <div className="container mx-auto px-4 lg:px-6 pb-8 flex items-end">
             <div className="flex gap-3">
               <Link
-                href={SLIDES[current]?.link || '/products'}
+                href={slides[current]?.link || '/products'}
                 className="px-6 py-2.5 rounded text-sm font-bold text-white transition-all hover:brightness-110 shadow"
                 style={{ backgroundColor: '#1a3a8f' }}
               >
-                SHOP NOW
+                {copy.hero_cta_label || 'SHOP NOW'}
               </Link>
             </div>
           </div>
         </div>
-      )}
     </section>
   );
 }

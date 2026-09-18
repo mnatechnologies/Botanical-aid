@@ -18,7 +18,6 @@ export default function Footer() {
                 alt="Botanical Aid"
                 width={160}
                 height={60}
-                unoptimized
                 className="mb-2"
               />
             </div>

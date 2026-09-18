@@ -6,20 +6,49 @@ import ProductCard from '@/components/ProductCard';
 import PostTreatmentBundleBanner from '@/components/PostTreatmentBundleBanner';
 import WhyChooseUs from '@/components/WhyChooseUs';
 import FAQAccordion from '@/components/FAQAccordion';
-import { products } from '@/data/products';
-import { faqSections } from '@/data/testimonials';
+import { getProducts } from '@/lib/products-db';
+import { getPageOverridesCached, text } from '@/lib/pageContent';
+import { PAGE_COPY_DEFAULTS } from '@/lib/pageCopyDefaults';
+import { faqSectionsFrom } from '@/lib/faq';
 
-const mentalHealthProducts = products.filter(p => p.category === 'mental-health');
-const postTreatmentProducts = products.filter(p => p.category === 'post-treatment');
 
-const botanicalFAQ = faqSections.filter(s => s.category === 'Botanical Aid');
-const homeopathyFAQ = faqSections.filter(s => s.category === 'Homeopathy');
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [products, b, faqBlocks] = await Promise.all([
+    getProducts(),
+    getPageOverridesCached('home'),
+    getPageOverridesCached('faq'),
+  ]);
+  const { botanical: botanicalFAQ, homeopathy: homeopathyFAQ } = faqSectionsFrom(faqBlocks);
+  const D = PAGE_COPY_DEFAULTS.home;
+  const mentalHealthProducts = products.filter((p) => p.category === 'mental-health');
+  const postTreatmentProducts = products.filter((p) => p.category === 'post-treatment');
+
   return (
     <>
-      <Hero />
-      <CategoryShowcase />
+      <Hero
+        copy={{
+          hero_slide1_headline: text(b, 'hero_slide1_headline', D.hero_slide1_headline),
+          hero_slide1_subheadline: text(b, 'hero_slide1_subheadline', D.hero_slide1_subheadline),
+          hero_slide1_description: text(b, 'hero_slide1_description', D.hero_slide1_description),
+          hero_slide2_headline: text(b, 'hero_slide2_headline', D.hero_slide2_headline),
+          hero_slide2_subheadline: text(b, 'hero_slide2_subheadline', D.hero_slide2_subheadline),
+          hero_slide2_description: text(b, 'hero_slide2_description', D.hero_slide2_description),
+          hero_slide3_headline: text(b, 'hero_slide3_headline', D.hero_slide3_headline),
+          hero_slide3_subheadline: text(b, 'hero_slide3_subheadline', D.hero_slide3_subheadline),
+          hero_slide3_description: text(b, 'hero_slide3_description', D.hero_slide3_description),
+          hero_cta_label: text(b, 'hero_cta_label', D.hero_cta_label),
+          images_hero_slide1_image: text(b, 'images_hero_slide1_image', D.images_hero_slide1_image),
+          images_hero_slide1_mobile_image: text(b, 'images_hero_slide1_mobile_image', D.images_hero_slide1_mobile_image),
+          images_hero_slide2_image: text(b, 'images_hero_slide2_image', D.images_hero_slide2_image),
+          images_hero_slide2_mobile_image: text(b, 'images_hero_slide2_mobile_image', D.images_hero_slide2_mobile_image),
+        }}
+      />
+      <CategoryShowcase
+        heading={text(b, 'category_heading', D.category_heading)}
+        mentalHealthImage={text(b, 'images_mental_health_circle_image', D.images_mental_health_circle_image)}
+        postTreatmentImage={text(b, 'images_post_treatment_circle_image', D.images_post_treatment_circle_image)}
+      />
 
       {/* ── Products Section ── */}
       <section className="py-14 bg-white">
@@ -65,7 +94,7 @@ export default function HomePage() {
               src="/assets/hero-shop.png"
               alt="Natural botanical ingredients — essential oil dropper"
               fill
-              unoptimized
+              sizes="100vw"
               className="object-cover"
             />
           </div>
@@ -108,7 +137,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Why Choose Us — split layout ── */}
-      <WhyChooseUs />
+      <WhyChooseUs image={text(b, 'images_why_choose_us_image', D.images_why_choose_us_image)} />
 
       {/* ── FAQ Section ── */}
       <section className="py-16 lg:py-20" style={{ backgroundColor: '#f0faf5' }}>
@@ -125,7 +154,6 @@ export default function HomePage() {
                   alt="BotanicalAid"
                   width={599}
                   height={90}
-                  unoptimized
                   className="h-10 w-auto object-contain"
                 />
               </div>
@@ -146,7 +174,6 @@ export default function HomePage() {
                   alt="Homeopathy"
                   width={598}
                   height={90}
-                  unoptimized
                   className="h-10 w-auto object-contain"
                 />
               </div>

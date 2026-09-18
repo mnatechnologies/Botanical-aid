@@ -46,7 +46,7 @@ export default function PostTreatmentBundleBanner() {
                     src={product.image}
                     alt={product.name}
                     fill
-                    unoptimized
+                    sizes="80px"
                     className="object-contain p-1.5"
                   />
                 </div>

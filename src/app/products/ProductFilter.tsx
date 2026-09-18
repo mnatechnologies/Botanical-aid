@@ -6,7 +6,7 @@ const filters = [
   { label: 'All Products', href: '/products', category: undefined },
   {
     label: 'Mental Health Range',
-    href: '/mental-healthrange',
+    href: '/mental-health-range',
     category: 'mental-health',
   },
   {

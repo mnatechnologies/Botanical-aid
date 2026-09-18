@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getProductsByCategory } from '@/data/products';
+import { getProducts } from '@/lib/products-db';
+import { getPageOverridesCached, text } from '@/lib/pageContent';
+import { PAGE_COPY_DEFAULTS } from '@/lib/pageCopyDefaults';
 import ProductCard from '@/components/ProductCard';
 
 export const metadata: Metadata = {
@@ -9,7 +11,7 @@ export const metadata: Metadata = {
   description:
     'Explore Botanical Aid\'s Mental Health range — natural homeopathic balms and creams to support anxiety, grief, depression, focus and emotional well-being. Australian-made, vegan & cruelty-free.',
   alternates: {
-    canonical: 'https://www.botanicalaid.com.au/mental-healthrange',
+    canonical: 'https://www.botanicalaid.com.au/mental-health-range',
   },
 };
 
@@ -21,8 +23,10 @@ const mentalHealthCircles = [
   { name: 'Mild Depression', image: '/circle/assets/circle-mild-depression.png', ring: '#22c55e', slug: 'mild-depression' },
 ];
 
-export default function MentalHealthRangePage() {
-  const products = getProductsByCategory('mental-health');
+export default async function MentalHealthRangePage() {
+  const products = (await getProducts()).filter((p) => p.category === 'mental-health');
+  const b = await getPageOverridesCached('mental-health-range');
+  const D = PAGE_COPY_DEFAULTS['mental-health-range'];
 
   return (
     <div>
@@ -34,7 +38,7 @@ export default function MentalHealthRangePage() {
             src="/assets/hero-mental-health.webp"
             alt=""
             fill
-            unoptimized
+            sizes="100vw"
             className="object-cover"
           />
         </div>
@@ -45,10 +49,10 @@ export default function MentalHealthRangePage() {
                 className="inline-block px-5 py-2 rounded text-white text-sm font-bold tracking-wider uppercase mb-6"
                 style={{ backgroundColor: '#7c3aed' }}
               >
-                MENTAL HEALTH RANGE
+                {text(b, 'hero_badge', D.hero_badge)}
               </span>
               <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-white leading-tight mb-5">
-                Find The Light And Set Your Mind Free With Botanical Aid.
+                {text(b, 'hero_h1', D.hero_h1)}
               </h1>
               <p className="text-white/75 text-sm sm:text-base leading-relaxed mb-8 max-w-lg">
                 Our <strong className="text-white">Mental Health</strong> range allow you to experience the profound
@@ -74,7 +78,7 @@ export default function MentalHealthRangePage() {
             src="/assets/hero-mental-health.webp"
             alt=""
             fill
-            unoptimized
+            sizes="100vw"
             className="object-cover"
           />
         </div>
@@ -83,10 +87,10 @@ export default function MentalHealthRangePage() {
             className="inline-block px-5 py-2 rounded text-white text-sm font-bold tracking-wider uppercase mb-5"
             style={{ backgroundColor: '#7c3aed' }}
           >
-            MENTAL HEALTH RANGE
+            {text(b, 'hero_badge', D.hero_badge)}
           </span>
           <h1 className="text-2xl font-bold text-foreground leading-tight mb-4">
-            Find The Light And Set Your Mind Free With Botanical Aid.
+            {text(b, 'hero_h1', D.hero_h1)}
           </h1>
           <p className="text-muted-foreground text-sm leading-relaxed mb-6">
             Our <strong className="text-foreground">Mental Health</strong> range allow you to experience the profound
@@ -121,7 +125,7 @@ export default function MentalHealthRangePage() {
                     src={item.image}
                     alt={item.name.replace('\n', ' ')}
                     fill
-                    unoptimized
+                    sizes="112px"
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>

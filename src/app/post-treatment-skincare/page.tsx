@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getProductsByCategory } from '@/data/products';
+import { getProducts } from '@/lib/products-db';
+import { getPageOverridesCached, text } from '@/lib/pageContent';
+import { PAGE_COPY_DEFAULTS } from '@/lib/pageCopyDefaults';
 import ProductCard from '@/components/ProductCard';
 import PostTreatmentBundleBanner from '@/components/PostTreatmentBundleBanner';
 
@@ -21,8 +23,10 @@ const postTreatmentCircles = [
   { name: 'Post Surgery\nCare Cream', image: '/circle/assets/circle-post-surgery.png', ring: '#a4d4e8', slug: 'post-surgery-care-cream' },
 ];
 
-export default function PostTreatmentSkincarePage() {
-  const products = getProductsByCategory('post-treatment');
+export default async function PostTreatmentSkincarePage() {
+  const products = (await getProducts()).filter((p) => p.category === 'post-treatment');
+  const b = await getPageOverridesCached('post-treatment-skincare');
+  const D = PAGE_COPY_DEFAULTS['post-treatment-skincare'];
 
   return (
     <div>
@@ -34,7 +38,7 @@ export default function PostTreatmentSkincarePage() {
             src="/assets/hero-post-treatment.avif"
             alt=""
             fill
-            unoptimized
+            sizes="100vw"
             className="object-cover"
           />
           <div
@@ -51,10 +55,10 @@ export default function PostTreatmentSkincarePage() {
                 className="inline-block px-5 py-2 rounded text-white text-sm font-bold tracking-wider uppercase mb-6"
                 style={{ backgroundColor: '#22c55e' }}
               >
-                POST TREATMENT SKINCARE
+                {text(b, 'hero_badge', D.hero_badge)}
               </span>
               <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-bold text-white leading-tight mb-5">
-                Comfort For Today, Confidence Tomorrow
+                {text(b, 'hero_h1', D.hero_h1)}
               </h1>
               <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-8 max-w-lg">
                 Our <strong className="text-white">Post Treatment</strong>
@@ -80,7 +84,7 @@ export default function PostTreatmentSkincarePage() {
             src="/assets/hero-post-treatment.avif"
             alt=""
             fill
-            unoptimized
+            sizes="100vw"
             className="object-cover"
           />
         </div>
@@ -89,10 +93,10 @@ export default function PostTreatmentSkincarePage() {
             className="inline-block px-5 py-2 rounded text-white text-sm font-bold tracking-wider uppercase mb-5"
             style={{ backgroundColor: '#22c55e' }}
           >
-            POST TREATMENT SKINCARE
+            {text(b, 'hero_badge', D.hero_badge)}
           </span>
           <h1 className="text-2xl font-bold text-foreground leading-tight mb-4">
-            Comfort For Today, Confidence Tomorrow
+            {text(b, 'hero_h1', D.hero_h1)}
           </h1>
           <p className="text-muted-foreground text-sm leading-relaxed mb-6">
             Our <strong className="text-foreground">Post Treatment Skincare</strong> Range
@@ -125,7 +129,7 @@ export default function PostTreatmentSkincarePage() {
                     src={item.image}
                     alt={item.name.replace('\n', ' ')}
                     fill
-                    unoptimized
+                    sizes="112px"
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>

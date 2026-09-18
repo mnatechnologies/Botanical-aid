@@ -44,7 +44,7 @@ export default function AboutPage() {
                 src="/circle/assets/about-extra.png"
                 alt="Natural botanical ingredients"
                 fill
-                unoptimized
+                sizes="100vw"
                 className="object-cover"
               />
             </div>
@@ -147,7 +147,7 @@ export default function AboutPage() {
                 src="/circle/assets/about-victoria.png"
                 alt="Victoria — Founder of Botanical Aid"
                 fill
-                unoptimized
+                sizes="100vw"
                 className="object-cover"
               />
             </div>
@@ -161,7 +161,7 @@ export default function AboutPage() {
           src="/circle/assets/about-homeopathy-banner.jpg"
           alt="About homeopathy"
           fill
-          unoptimized
+          sizes="100vw"
           className="object-cover"
         />
         <div className="absolute inset-0 bg-black/30" />

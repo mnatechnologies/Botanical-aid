@@ -3,6 +3,8 @@ import { Inter, DM_Sans } from 'next/font/google';
 import { Toaster } from 'sonner';
 import { CartProvider } from '@/contexts/CartContext';
 import Header from '@/components/Header';
+import { getPageOverridesCached, text } from '@/lib/pageContent';
+import { PAGE_COPY_DEFAULTS } from '@/lib/pageCopyDefaults';
 import Footer from '@/components/Footer';
 import './globals.css';
 import Script from 'next/script'
@@ -88,11 +90,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const globalCopy = await getPageOverridesCached('global');
+
   return (
     <html lang="en" className={`${inter.variable} ${dmSans.variable}`}>
     <head>
@@ -165,7 +169,7 @@ export default function RootLayout({
           }}
         />
         <CartProvider>
-          <Header />
+          <Header announcement={text(globalCopy, 'announcement_bar', PAGE_COPY_DEFAULTS.global.announcement_bar)} />
           {/* top-9 = topbar (36px), + nav (72px) = 108px total */}
           <main className="min-h-screen pt-[108px]">{children}</main>
           <Footer />

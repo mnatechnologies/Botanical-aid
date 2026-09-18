@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import FAQAccordion from '@/components/FAQAccordion';
-import { faqSections } from '@/data/testimonials';
+import { getPageOverridesCached, text } from '@/lib/pageContent';
+import { PAGE_COPY_DEFAULTS } from '@/lib/pageCopyDefaults';
+import { faqSectionsFrom } from '@/lib/faq';
 import PageHero from '@/components/PageHero';
 
 export const metadata: Metadata = {
@@ -13,8 +15,8 @@ export const metadata: Metadata = {
   },
 };
 
-function FAQJsonLd() {
-  const allQuestions = faqSections.flatMap((section) =>
+function FAQJsonLd({ sections }: { sections: { items: { question: string; answer: string }[] }[] }) {
+  const allQuestions = sections.flatMap((section) =>
     section.items.map((item) => ({
       '@type': 'Question' as const,
       name: item.question,
@@ -39,18 +41,19 @@ function FAQJsonLd() {
   );
 }
 
-export default function FAQPage() {
-  const botanicalFAQ = faqSections.filter((s) => s.category === 'Botanical Aid');
-  const homeopathyFAQ = faqSections.filter((s) => s.category === 'Homeopathy');
+export default async function FAQPage() {
+  const b = await getPageOverridesCached('faq');
+  const D = PAGE_COPY_DEFAULTS.faq;
+  const { botanical: botanicalFAQ, homeopathy: homeopathyFAQ } = faqSectionsFrom(b);
 
   return (
     <div>
-      <FAQJsonLd />
+      <FAQJsonLd sections={[...botanicalFAQ, ...homeopathyFAQ]} />
       <PageHero title="FAQs" imageUrl="/assets/hero-shop.png" />
 
       <div className="container mx-auto px-4 lg:px-6 py-12">
         <h2 className="text-2xl lg:text-3xl font-bold text-[#1a3a8f] mb-10 text-center">
-          FAQ &ndash; Frequently Asked Questions
+          {text(b, 'page_heading', D.page_heading)}
         </h2>
 
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-12">
@@ -62,7 +65,6 @@ export default function FAQPage() {
                 alt="BotanicalAid"
                 width={599}
                 height={90}
-                unoptimized
                 className="h-10 w-auto object-contain"
               />
             </div>
@@ -84,7 +86,6 @@ export default function FAQPage() {
                 alt="Homeopathy"
                 width={598}
                 height={90}
-                unoptimized
                 className="h-10 w-auto object-contain"
               />
             </div>

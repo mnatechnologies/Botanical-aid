@@ -80,7 +80,7 @@ export default function ProductDetail({ product }: { product: Product }) {
               src={product.image}
               alt={product.name}
               fill
-              unoptimized
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-contain p-8"
             />
           ) : (
@@ -232,7 +232,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                       src={ing.image}
                       alt={ing.name}
                       fill
-                      unoptimized
+                      sizes="96px"
                       className="object-cover"
                     />
                   </div>

@@ -9,7 +9,7 @@ const values = [
   'Trusted Quality',
 ];
 
-export default function WhyChooseUs() {
+export default function WhyChooseUs({ image = '/assets/why-choose-us.jpg' }: { image?: string }) {
   return (
     <section className="w-full">
       <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[420px]">
@@ -53,10 +53,10 @@ export default function WhyChooseUs() {
         {/* Right — photo */}
         <div className="relative min-h-[320px] lg:min-h-0">
           <Image
-            src="/assets/why-choose-us.jpg"
+            src={image}
             alt="Natural wellness — butterfly on flower"
             fill
-            unoptimized
+            sizes="(max-width: 1024px) 100vw, 50vw"
             className="object-cover"
           />
         </div>

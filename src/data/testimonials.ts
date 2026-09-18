@@ -156,7 +156,7 @@ export const testimonials: Testimonial[] = [
     date: 'June 2025',
     rating: 5,
     quote: 'I normally get swelling and stinging after lip fillers, after using post lip filler balm the stinging went away and was very hydrating and soothing\u2014no more dryness or tightness.',
-    product: 'Post Lip Filler Balm',
+    product: 'Post Cosmetic Lip Balm',
     category: 'post-treatment',
   },
   {
@@ -165,7 +165,7 @@ export const testimonials: Testimonial[] = [
     date: 'May 2025',
     rating: 5,
     quote: 'A must-have for post-filler care! My lips felt nourished, and the healing process was so much smoother.',
-    product: 'Post Lip Filler Balm',
+    product: 'Post Cosmetic Lip Balm',
     category: 'post-treatment',
   },
   {
@@ -174,7 +174,7 @@ export const testimonials: Testimonial[] = [
     date: 'April 2025',
     rating: 5,
     quote: 'I was worried about irritation, but this balm kept my lips soft and protected. Definitely part of my routine now!',
-    product: 'Post Lip Filler Balm',
+    product: 'Post Cosmetic Lip Balm',
     category: 'post-treatment',
   },
   {
@@ -183,7 +183,7 @@ export const testimonials: Testimonial[] = [
     date: 'March 2025',
     rating: 5,
     quote: 'Lightweight, non-sticky, and incredibly soothing. My lips healed beautifully!',
-    product: 'Post Lip Filler Balm',
+    product: 'Post Cosmetic Lip Balm',
     category: 'post-treatment',
   },
   {
@@ -192,7 +192,7 @@ export const testimonials: Testimonial[] = [
     date: 'February 2025',
     rating: 5,
     quote: 'The perfect post-filler product! No cracking, no discomfort\u2014just smooth, healthy lips. I continue to use this as my every day lip balm.',
-    product: 'Post Lip Filler Balm',
+    product: 'Post Cosmetic Lip Balm',
     category: 'post-treatment',
   },
   // ── Post Treatment Skincare — Post Surgery Care Cream ──

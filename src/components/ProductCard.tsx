@@ -17,19 +17,6 @@ const categoryLabels: Record<Product['category'], string> = {
   'post-treatment': 'POST TREATMENT SKINCARE RANGE',
 };
 
-function Stars({ rating = 5, count }: { rating?: number; count?: number }) {
-  return (
-    <div className="flex items-center gap-1 mt-1">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <svg key={i} className={`w-3.5 h-3.5 ${i < rating ? 'text-yellow-400' : 'text-gray-200'}`} fill="currentColor" viewBox="0 0 20 20">
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-        </svg>
-      ))}
-      {count && <span className="text-xs text-gray-400">({count})</span>}
-    </div>
-  );
-}
-
 export default function ProductCard({ product }: { product: Product }) {
   const { addToCart } = useCart();
   const [open, setOpen] = useState(false);
@@ -66,7 +53,7 @@ export default function ProductCard({ product }: { product: Product }) {
             src={product.image}
             alt={product.name}
             fill
-            unoptimized
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
@@ -86,8 +73,6 @@ export default function ProductCard({ product }: { product: Product }) {
         <p className="text-[10px] font-semibold text-gray-400 tracking-widest uppercase mt-0.5">
           {categoryLabels[product.category]}
         </p>
-
-        {product.id === 'grief' && <Stars rating={5} />}
 
         <div className="mt-2 flex items-center gap-2">
           <p className="text-base font-bold text-[#22a855]">

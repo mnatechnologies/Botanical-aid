@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { products, getProductBySlug, getProductsByCategory } from '@/data/products';
+import { products as staticProducts } from '@/data/products';
+import { getProducts, getProductBySlug } from '@/lib/products-db';
+import type { Product } from '@/types/product';
 import ProductDetail from './ProductDetail';
 import ProductCard from '@/components/ProductCard';
 import PostTreatmentBundleBanner from '@/components/PostTreatmentBundleBanner';
@@ -10,14 +12,14 @@ interface ProductPageProps {
 }
 
 export async function generateStaticParams() {
-  return products.map((p) => ({ slug: p.slug }));
+  return staticProducts.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) return { title: 'Product Not Found' };
 
   const categoryLabel =
@@ -51,9 +53,7 @@ export async function generateMetadata({
   };
 }
 
-function ProductJsonLd({ slug }: { slug: string }) {
-  const product = getProductBySlug(slug);
-  if (!product) return null;
+function ProductJsonLd({ product }: { product: Product }) {
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -91,9 +91,7 @@ function ProductJsonLd({ slug }: { slug: string }) {
   );
 }
 
-function BreadcrumbJsonLd({ slug }: { slug: string }) {
-  const product = getProductBySlug(slug);
-  if (!product) return null;
+function BreadcrumbJsonLd({ product }: { product: Product }) {
 
   const categoryLabel =
     product.category === 'mental-health'
@@ -101,7 +99,7 @@ function BreadcrumbJsonLd({ slug }: { slug: string }) {
       : 'Post Treatment Skincare';
   const categoryPath =
     product.category === 'mental-health'
-      ? '/mental-healthrange'
+      ? '/mental-health-range'
       : '/post-treatment-skincare';
 
   const jsonLd = {
@@ -139,17 +137,17 @@ function BreadcrumbJsonLd({ slug }: { slug: string }) {
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
 
-  const relatedProducts = getProductsByCategory(product.category).filter(
-    (p) => p.id !== product.id,
+  const relatedProducts = (await getProducts()).filter(
+    (p) => p.category === product.category && p.id !== product.id,
   );
 
   return (
     <div className="container mx-auto px-4 lg:px-6 py-12">
-      <ProductJsonLd slug={slug} />
-      <BreadcrumbJsonLd slug={slug} />
+      <ProductJsonLd product={product} />
+      <BreadcrumbJsonLd product={product} />
       <ProductDetail product={product} />
 
       {product.category === 'post-treatment' && (

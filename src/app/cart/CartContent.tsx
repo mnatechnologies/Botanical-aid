@@ -49,7 +49,7 @@ export default function CartContent() {
                 {/* Product image */}
                 <Link href={`/products/${item.product.slug}`} className="relative w-20 h-20 rounded-md flex-shrink-0 overflow-hidden bg-[#f0faf5]">
                   {item.product.image ? (
-                    <Image src={item.product.image} alt={item.product.name} fill unoptimized className="object-contain p-1.5" />
+                    <Image src={item.product.image} alt={item.product.name} fill className="object-contain p-1.5" />
                   ) : (
                     <span className="absolute inset-0 flex items-center justify-center text-2xl opacity-30">
                       {item.product.category === 'mental-health' ? '🧠' : '✨'}

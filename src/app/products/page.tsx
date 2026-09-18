@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { products, getProductsByCategory } from '@/data/products';
+import { getProducts } from '@/lib/products-db';
+import { getPageOverridesCached, text } from '@/lib/pageContent';
+import { PAGE_COPY_DEFAULTS } from '@/lib/pageCopyDefaults';
 import type { Product } from '@/types/product';
 import ProductCard from '@/components/ProductCard';
 import PostTreatmentBundleBanner from '@/components/PostTreatmentBundleBanner';
@@ -59,7 +61,7 @@ function CategoryCircles({ items }: { items: typeof mentalHealthCircles }) {
                   src={item.image}
                   alt={item.name.replace('\n', ' ')}
                   fill
-                  unoptimized
+                  sizes="112px"
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
@@ -84,7 +86,7 @@ function MentalHealthHero() {
       {/* Desktop */}
       <section className="relative w-full overflow-hidden hidden md:block" style={{ height: '620px' }}>
         <div className="absolute inset-0 bg-black">
-          <Image src="/assets/hero-mental-health.webp" alt="" fill unoptimized className="object-cover" />
+          <Image src="/assets/hero-mental-health.webp" alt="" fill className="object-cover" />
         </div>
         <div className="relative z-10 h-full flex items-center">
           <div className="container mx-auto px-6 lg:px-10">
@@ -100,7 +102,7 @@ function MentalHealthHero() {
       {/* Mobile */}
       <section className="md:hidden">
         <div className="relative w-full aspect-[4/3]">
-          <Image src="/assets/hero-mental-health.webp" alt="" fill unoptimized className="object-cover" />
+          <Image src="/assets/hero-mental-health.webp" alt="" fill className="object-cover" />
         </div>
         <div className="px-6 py-8 text-center">
           <span className="inline-block px-5 py-2 rounded text-white text-sm font-bold tracking-wider uppercase mb-5" style={{ backgroundColor: '#7c3aed' }}>MENTAL HEALTH RANGE</span>
@@ -119,7 +121,7 @@ function PostTreatmentHero() {
       {/* Desktop */}
       <section className="relative w-full overflow-hidden hidden md:block" style={{ height: '620px' }}>
         <div className="absolute inset-0">
-          <Image src="/assets/hero-post-treatment.avif" alt="" fill unoptimized className="object-cover" />
+          <Image src="/assets/hero-post-treatment.avif" alt="" fill className="object-cover" />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 50%, transparent 100%)' }} />
         </div>
         <div className="relative z-10 h-full flex items-center">
@@ -136,7 +138,7 @@ function PostTreatmentHero() {
       {/* Mobile */}
       <section className="md:hidden">
         <div className="relative w-full aspect-[4/3]">
-          <Image src="/assets/hero-post-treatment.avif" alt="" fill unoptimized className="object-cover" />
+          <Image src="/assets/hero-post-treatment.avif" alt="" fill className="object-cover" />
         </div>
         <div className="px-6 py-8 text-center">
           <span className="inline-block px-5 py-2 rounded text-white text-sm font-bold tracking-wider uppercase mb-5" style={{ backgroundColor: '#22c55e' }}>POST TREATMENT SKINCARE</span>
@@ -151,15 +153,18 @@ function PostTreatmentHero() {
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
   const { category } = await searchParams;
+  const allProducts = await getProducts();
+  const b = await getPageOverridesCached('products');
+  const D = PAGE_COPY_DEFAULTS.products;
 
   let filteredProducts: Product[];
   let pageTitle: string;
 
   if (category === 'mental-health' || category === 'post-treatment') {
-    filteredProducts = getProductsByCategory(category);
+    filteredProducts = allProducts.filter((p) => p.category === category);
     pageTitle = categoryLabels[category];
   } else {
-    filteredProducts = products;
+    filteredProducts = allProducts;
     pageTitle = 'All Products';
   }
 
@@ -172,7 +177,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         <PostTreatmentHero />
       ) : (
         <PageHero
-          title="Shop"
+          title={text(b, 'hero_title', D.hero_title)}
           imageUrl="/assets/hero-shop.png"
         />
       )}
@@ -206,7 +211,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       <div className="text-center mb-10">
         <h1 className="text-3xl font-bold text-foreground">{pageTitle}</h1>
         <p className="text-muted-foreground mt-2 max-w-xl mx-auto">
-          Explore our full range of natural wellness products.
+          {text(b, 'products_intro', D.products_intro)}
         </p>
       </div>
       )}

@@ -70,13 +70,15 @@ export async function POST(request: Request) {
     let totalCents = 0;
     const lineItems: LineItem[] = [];
 
-    // Try Supabase first, fall back to static data
+    // Try Supabase first, fall back to static data.
+    // Cart items are keyed by slug (that is what the storefront exposes as the
+    // product id), and variants by their variant_key, not by uuid.
     const supabase = getAdminClient();
-    const productIds = items.map((i) => i.productId);
+    const productSlugs = items.map((i) => i.productId);
     const { data: dbProducts } = await supabase
       .from('products')
       .select('*, product_variants(*)')
-      .in('id', productIds)
+      .in('slug', productSlugs)
       .eq('is_active', true);
 
     for (const item of items) {
@@ -84,24 +86,39 @@ export async function POST(request: Request) {
       let productName: string;
       let variantName: string | undefined;
 
-      const dbProduct = dbProducts?.find((p) => p.id === item.productId);
+      const dbProduct = dbProducts?.find((p) => p.slug === item.productId);
 
       if (dbProduct) {
-        if (item.variantId) {
-          const variants = dbProduct.product_variants as Array<{ id: string; name: string; price: number; stock: number }>;
-          const variant = variants.find((v) => v.id === item.variantId);
-          if (!variant) {
-            return NextResponse.json(
-              { error: `Variant not found: ${item.variantId}` },
-              { status: 400 }
-            );
-          }
+        const variants = (dbProduct.product_variants ?? []) as Array<{
+          variant_key: string | null;
+          name: string;
+          price: number;
+          total_price: number | null;
+          quantity: number;
+        }>;
+        productName = dbProduct.name;
+
+        // Bundle variants carry their own total (3 × $19.95 is $51.95, not $59.85),
+        // so price off total_price for the matching quantity where one exists.
+        const variant =
+          (item.variantId && variants.find((v) => v.variant_key === item.variantId)) ||
+          variants.find((v) => v.quantity === item.quantity);
+
+        if (item.variantId && !variant) {
+          return NextResponse.json(
+            { error: `Variant not found: ${item.variantId}` },
+            { status: 400 }
+          );
+        }
+
+        if (variant && variant.quantity === item.quantity) {
+          lineTotalDollars = variant.total_price ?? variant.price * item.quantity;
+          variantName = variant.name;
+        } else if (variant) {
           lineTotalDollars = variant.price * item.quantity;
-          productName = dbProduct.name;
           variantName = variant.name;
         } else {
           lineTotalDollars = dbProduct.price * item.quantity;
-          productName = dbProduct.name;
         }
       } else {
         // Fall back to static product data with bundle pricing
