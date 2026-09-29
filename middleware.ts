@@ -42,5 +42,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  // /set-password and /auth/* are here so the session cookie set by the invite
+  // exchange is refreshed on the way through; only /admin is actually gated above.
+  matcher: ['/admin/:path*', '/set-password', '/auth/:path*'],
 };
